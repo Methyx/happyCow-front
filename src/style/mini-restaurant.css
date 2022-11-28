@@ -1,0 +1,10 @@
+.mini-restaurant {
+  height: 350px;
+  width: 280px;
+}
+
+.mini-restaurant img {
+  width: 100%;
+  height: 50%;
+  object-fit: cover;
+}
