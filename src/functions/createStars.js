@@ -5,10 +5,22 @@ const createStars = (rating) => {
   const emptyStars = [];
   const width = 90;
   for (let i = 1; i <= 5; i++) {
-    emptyStars.push(<FontAwesomeIcon icon="star" style={{ color: "gray" }} />);
+    emptyStars.push(
+      <FontAwesomeIcon
+        key={Math.random()}
+        icon="star"
+        style={{ color: "gray" }}
+      />
+    );
   }
   for (let i = 1; i <= Math.ceil(rating); i++) {
-    goldStars.push(<FontAwesomeIcon icon="star" style={{ color: "gold" }} />);
+    goldStars.push(
+      <FontAwesomeIcon
+        key={Math.random()}
+        icon="star"
+        style={{ color: "gold" }}
+      />
+    );
   }
   return (
     <div style={{ position: "relative" }}>

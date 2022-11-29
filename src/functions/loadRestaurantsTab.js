@@ -11,7 +11,7 @@ const loadRestaurantsTab = async (
   url += "&nbPerPage=" + nbPerPage;
   try {
     const response = await axios.get(url);
-    console.log(response.data);
+    // console.log(response.data);
     setRestaurantsTab(response.data);
     setIsLoading(false);
   } catch (error) {
