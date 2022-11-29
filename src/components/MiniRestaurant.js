@@ -1,12 +1,32 @@
+// major imports
+import { Link } from "react-router-dom";
+
+// style
 import "../style/mini-restaurant.css";
 
+// functions
+import createStars from "../functions/createStars";
+
+//
 const MiniRestaurant = ({ restaurant }) => {
+  const addressTab = restaurant.address.split(",");
+  const zipCode = addressTab.pop();
+  const country = addressTab.pop();
+  const city = addressTab.pop();
+
   return (
-    <div className="mini-restaurant">
+    <Link to={`/zoom/${restaurant._id}`} className="mini-restaurant">
       <img src={restaurant.thumbnail} alt="restaurant" />
-      <p>{restaurant.name}</p>
+      <h3>{restaurant.name}</h3>
+      <h4>
+        {zipCode} - {city} , {country}
+      </h4>
+      <div className="rating">
+        {createStars(restaurant.rating)}
+        <span>{restaurant.rating}/5</span>
+      </div>
       <p>{restaurant.description}</p>
-    </div>
+    </Link>
   );
 };
 

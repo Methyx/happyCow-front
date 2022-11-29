@@ -1,0 +1,16 @@
+.restaurant h1 {
+  font-size: 28px;
+  font-weight: 500;
+  margin: 20px 0;
+}
+
+.restaurant .rating {
+  height: 25px;
+  display: flex;
+  flex-direction: row;
+}
+.restaurant .rating span {
+  font-size: 12px;
+  margin-left: 10px;
+  margin-top: 5px;
+}

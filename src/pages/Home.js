@@ -1,6 +1,9 @@
 // major imports
 import { useState, useEffect } from "react";
 
+// spinner
+import IsLoading from "../components/IsLoading";
+
 // style
 import "../style/home.css";
 
@@ -27,7 +30,7 @@ const Home = () => {
       <div className="restaurants container">
         <h1>List of restaurants : {restaurantsTab.count}</h1>
         {isLoading ? (
-          <p>Is loading ...</p>
+          <IsLoading />
         ) : (
           <div className="list-of-restaurants">
             {restaurantsTab.restaurants.map((item) => {
