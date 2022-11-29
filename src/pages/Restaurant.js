@@ -2,35 +2,19 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Carousel from "react-multi-carousel";
-
-// carousel
-import "react-multi-carousel/lib/styles.css";
-
-// Leaflet
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-// import MarkerClusterGroup from "react-leaflet-cluster";
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
 
 // component
 import IsLoading from "../components/IsLoading";
+import CarouselPageRestaurant from "../components/CarouselPageRestaurant";
+import MapPageRestaurant from "../components/MapPageRestaurant";
 
 // function
 import createStars from "../functions/createStars";
 
 // style
 import "../style/restaurant.css";
-
-// Icon Leaflet
-const homeIcon = new L.Icon({
-  iconUrl: require("../img/here.svg").default,
-  iconSize: new L.Point(40, 47),
-});
-const placeIcon = new L.Icon({
-  iconUrl: require("../img/placeholder.svg").default,
-  iconSize: new L.Point(40, 47),
-});
+// icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Restaurant = () => {
   const { id } = useParams();
@@ -38,7 +22,6 @@ const Restaurant = () => {
   // UseStates
   const [isLoading, setIsLoading] = useState(true);
   const [restaurant, setRestaurant] = useState(null);
-  const [position, setPosition] = useState({ lng: 2.3522219, lat: 48.856614 });
 
   // UseEffect
   useEffect(() => {
@@ -50,14 +33,6 @@ const Restaurant = () => {
         url += id;
         const response = await axios.get(url);
         setRestaurant(response.data);
-        if ("geolocation" in navigator) {
-          await navigator.geolocation.getCurrentPosition((position) => {
-            setPosition({
-              lng: position.coords.longitude,
-              lat: position.coords.latitude,
-            });
-          });
-        }
         setIsLoading(false);
       } catch (error) {
         console.log(error.message);
@@ -65,27 +40,6 @@ const Restaurant = () => {
     };
     loadRestaurant(id);
   }, [id]);
-
-  // Carousel
-  const carouselResponsive = {
-    superLargeDesktop: {
-      // the naming can be any, depends on you.
-      breakpoint: { max: 4000, min: 3000 },
-      items: 5,
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 3,
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 2,
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1,
-    },
-  };
 
   // RETURN
   return (
@@ -100,47 +54,37 @@ const Restaurant = () => {
               {createStars(restaurant.rating)}
               <span>{restaurant.rating}/5</span>
             </div>
-            <Carousel
-              responsive={carouselResponsive}
-              containerClass="carousel-container"
-              swipeable
-            >
-              {restaurant.pictures.map((item, index) => {
-                return (
-                  <img
-                    className="carousel-image"
-                    key={index}
-                    src={item}
-                    alt="restaurant's food"
-                  />
-                );
-              })}
-            </Carousel>
+            <CarouselPageRestaurant restaurant={restaurant} />
             <p className="description">{restaurant.description}</p>
           </div>
           <div className="right-side">
-            <div>
-              <MapContainer
-                className="map-container"
-                center={[restaurant.location.lat, restaurant.location.lng]}
-                zoom={12}
-                maxZoom={18}
-              >
-                <TileLayer
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                  attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                />
-                <Marker position={[position.lat, position.lng]} icon={homeIcon}>
-                  <Popup>me</Popup>
-                </Marker>
-                <Marker
-                  position={[restaurant.location.lat, restaurant.location.lng]}
-                  icon={placeIcon}
-                >
-                  <Popup>{restaurant.name}</Popup>
-                </Marker>
-              </MapContainer>
-            </div>
+            <MapPageRestaurant restaurant={restaurant} />
+            <p>
+              <FontAwesomeIcon
+                icon="location-dot"
+                style={{ marginRight: "15px" }}
+              />
+              {restaurant.address}
+            </p>
+            <p>
+              <FontAwesomeIcon icon="phone" style={{ marginRight: "15px" }} />
+              {restaurant.phone}
+            </p>
+            <p>
+              <FontAwesomeIcon icon="link" style={{ marginRight: "15px" }} />
+              <a href={restaurant.website} target="_blank">
+                {restaurant.website}
+              </a>
+            </p>
+            <p>
+              <FontAwesomeIcon
+                icon="people-arrows"
+                style={{ marginRight: "15px" }}
+              />
+              <a href={restaurant.facebook} target="_blank">
+                Facebook
+              </a>
+            </p>
           </div>
         </div>
       )}

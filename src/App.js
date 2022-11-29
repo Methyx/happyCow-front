@@ -11,8 +11,15 @@ import Restaurant from "./pages/Restaurant";
 
 // FontAwesome
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faBars, faStar } from "@fortawesome/free-solid-svg-icons";
-library.add(faBars, faStar);
+import {
+  faBars,
+  faStar,
+  faLocationDot,
+  faPhone,
+  faLink,
+  faPeopleArrows,
+} from "@fortawesome/free-solid-svg-icons";
+library.add(faBars, faStar, faLocationDot, faPhone, faLink, faPeopleArrows);
 
 //
 // App
