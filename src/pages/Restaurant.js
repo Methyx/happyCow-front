@@ -23,8 +23,12 @@ import createStars from "../functions/createStars";
 import "../style/restaurant.css";
 
 // Icon Leaflet
-const customIcon = new L.Icon({
-  iconUrl: require("../img/location.svg").default,
+const homeIcon = new L.Icon({
+  iconUrl: require("../img/here.svg").default,
+  iconSize: new L.Point(40, 47),
+});
+const placeIcon = new L.Icon({
+  iconUrl: require("../img/placeholder.svg").default,
   iconSize: new L.Point(40, 47),
 });
 
@@ -34,6 +38,7 @@ const Restaurant = () => {
   // UseStates
   const [isLoading, setIsLoading] = useState(true);
   const [restaurant, setRestaurant] = useState(null);
+  const [position, setPosition] = useState({ lng: 2.3522219, lat: 48.856614 });
 
   // UseEffect
   useEffect(() => {
@@ -45,6 +50,14 @@ const Restaurant = () => {
         url += id;
         const response = await axios.get(url);
         setRestaurant(response.data);
+        if ("geolocation" in navigator) {
+          await navigator.geolocation.getCurrentPosition((position) => {
+            setPosition({
+              lng: position.coords.longitude,
+              lat: position.coords.latitude,
+            });
+          });
+        }
         setIsLoading(false);
       } catch (error) {
         console.log(error.message);
@@ -110,16 +123,19 @@ const Restaurant = () => {
               <MapContainer
                 className="map-container"
                 center={[restaurant.location.lat, restaurant.location.lng]}
-                zoom={13}
+                zoom={12}
                 maxZoom={18}
               >
                 <TileLayer
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                   attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 />
+                <Marker position={[position.lat, position.lng]} icon={homeIcon}>
+                  <Popup>me</Popup>
+                </Marker>
                 <Marker
                   position={[restaurant.location.lat, restaurant.location.lng]}
-                  icon={customIcon}
+                  icon={placeIcon}
                 >
                   <Popup>{restaurant.name}</Popup>
                 </Marker>
