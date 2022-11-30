@@ -1,7 +1,6 @@
 // major imports
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
 
 // component
 import IsLoading from "../components/IsLoading";
@@ -10,13 +9,15 @@ import MapPageRestaurant from "../components/MapPageRestaurant";
 
 // function
 import createStars from "../functions/createStars";
+import loadRestaurantById from "../functions/loadRestaurantById";
 
 // style
 import "../style/restaurant.css";
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Restaurant = () => {
+const RestaurantDetails = () => {
+  // params dans l'url
   const { id } = useParams();
 
   // UseStates
@@ -25,20 +26,7 @@ const Restaurant = () => {
 
   // UseEffect
   useEffect(() => {
-    const loadRestaurant = async (id) => {
-      try {
-        setIsLoading(true);
-        let url =
-          "https://site--happycow-back--gw6mlgwnmzwz.code.run/restaurant/";
-        url += id;
-        const response = await axios.get(url);
-        setRestaurant(response.data);
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-    loadRestaurant(id);
+    loadRestaurantById(id, setRestaurant, setIsLoading);
   }, [id]);
 
   // RETURN
@@ -54,7 +42,13 @@ const Restaurant = () => {
               {createStars(restaurant.rating)}
               <span>{restaurant.rating}/5</span>
             </div>
-            <CarouselPageRestaurant restaurant={restaurant} />
+            <div className="carousel-place">
+              <CarouselPageRestaurant restaurant={restaurant} />
+              <Link
+                to={`/photos/${id}`}
+                className="see-all-photos"
+              >{`See all photos (${restaurant.pictures.length})`}</Link>
+            </div>
             <p className="description">{restaurant.description}</p>
           </div>
           <div className="right-side">
@@ -72,7 +66,7 @@ const Restaurant = () => {
             </p>
             <p>
               <FontAwesomeIcon icon="link" style={{ marginRight: "15px" }} />
-              <a href={restaurant.website} target="_blank">
+              <a href={restaurant.website} rel="noreferrer" target="_blank">
                 {restaurant.website}
               </a>
             </p>
@@ -81,7 +75,7 @@ const Restaurant = () => {
                 icon="people-arrows"
                 style={{ marginRight: "15px" }}
               />
-              <a href={restaurant.facebook} target="_blank">
+              <a href={restaurant.facebook} rel="noreferrer" target="_blank">
                 Facebook
               </a>
             </p>
@@ -91,4 +85,4 @@ const Restaurant = () => {
     </div>
   );
 };
-export default Restaurant;
+export default RestaurantDetails;

@@ -2,6 +2,7 @@
   --happyCow-color: #9069cd;
 
   font-family: "Poppins", sans-serif;
+  position: relative;
 }
 
 button:hover {

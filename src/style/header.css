@@ -4,7 +4,8 @@ header {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin: 0 20px;
+  padding: 0 20px;
+  border-bottom: 2px solid lightgrey;
 }
 header .left {
   display: flex;

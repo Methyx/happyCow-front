@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 // style
 import "../style/header.css";
 
@@ -12,7 +14,9 @@ const Header = () => {
     <header>
       <div className="left">
         <FontAwesomeIcon icon="bars" className="icon-menu" />
-        <img src={logo} className="logo" alt="logo HappyCow" />
+        <Link to={"/"}>
+          <img src={logo} className="logo" alt="logo HappyCow" />
+        </Link>
         <div className="menu">
           <nav>menu 1</nav>
           <nav>menu 2</nav>

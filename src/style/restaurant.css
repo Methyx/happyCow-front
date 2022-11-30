@@ -24,6 +24,23 @@
   margin-left: 10px;
   margin-top: 5px;
 }
+.restaurant .carousel-place {
+  position: relative;
+}
+.restaurant .see-all-photos {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: rgb(0, 0, 0, 0.5);
+  color: white;
+  padding: 5px;
+  border: 1px solid white;
+  border-radius: 4px;
+  font-size: 16px;
+}
+.restaurant .see-all-photos:hover {
+  background-color: rgb(0, 0, 0, 0.8);
+}
 .restaurant .description {
   margin-top: 30px;
   line-height: 24px;
