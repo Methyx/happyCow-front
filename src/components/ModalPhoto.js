@@ -1,6 +1,6 @@
 import "../style/modalPhoto.css";
 
-const ModalPhoto = ({ imageInModal, setModalPhoto }) => {
+const ModalPhoto = ({ imageInModal, setModalPhotoVisible }) => {
   document.body.style.overflow = "hidden";
   return (
     <div className="modalPhoto-root">
@@ -11,12 +11,13 @@ const ModalPhoto = ({ imageInModal, setModalPhoto }) => {
         }}
       >
         <button
+          className="close"
           onClick={() => {
-            setModalPhoto(false);
+            setModalPhotoVisible(false);
             document.body.style.overflow = "auto";
           }}
         >
-          Close
+          X
         </button>
         <img src={imageInModal} alt="restaurant" />
       </div>

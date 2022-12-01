@@ -9,7 +9,7 @@ import logo from "../img/HappyCow_Logo_Head_Text.svg";
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Header = () => {
+const Header = ({ setModalLoginVisible }) => {
   return (
     <header>
       <div className="left">
@@ -24,7 +24,14 @@ const Header = () => {
         </div>
       </div>
       <div className="right">
-        <button className="sign">Login / Join</button>
+        <button
+          className="sign"
+          onClick={() => {
+            setModalLoginVisible(true);
+          }}
+        >
+          Login / Join
+        </button>
       </div>
     </header>
   );

@@ -13,21 +13,24 @@
 .modalPhoto {
   background-color: black;
   width: 85%;
-  height: 85%;
+  height: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.modalPhoto button {
+.modalPhoto .close {
+  margin: 15px;
   height: 40px;
-  font-size: 30px;
-  margin: 5px 0;
-  padding: 0 15px;
-  margin-left: calc(100% - 150px);
-  display: block;
+  width: 40px;
+  font-size: 20px;
+  border-radius: 50%;
+  color: white;
+  background-color: gray;
+  border: 1px solid white;
+  align-self: flex-end;
 }
 .modalPhoto img {
   max-width: 100%;
-  height: calc(100% - 60px);
+  height: calc(100% - 100px);
   object-fit: contain;
 }

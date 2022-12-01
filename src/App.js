@@ -11,6 +11,7 @@ import Home from "./pages/Home";
 import RestaurantDetails from "./pages/RestaurantDetails";
 import RestaurantImages from "./pages/RestaurantImages";
 import ModalPhoto from "./components/ModalPhoto";
+import ModalLogin from "./components/ModalLogin";
 
 // FontAwesome
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -21,20 +22,30 @@ import {
   faPhone,
   faLink,
   faPeopleArrows,
+  faEye,
 } from "@fortawesome/free-solid-svg-icons";
-library.add(faBars, faStar, faLocationDot, faPhone, faLink, faPeopleArrows);
+library.add(
+  faBars,
+  faStar,
+  faLocationDot,
+  faPhone,
+  faLink,
+  faPeopleArrows,
+  faEye
+);
 
 //
 // App
 //
 function App() {
   // UseSates
-  const [modalPhoto, setModalPhoto] = useState(false);
+  const [modalPhotoVisible, setModalPhotoVisible] = useState(false);
   const [imageInModal, setImageInModal] = useState("");
+  const [modalLoginVisible, setModalLoginVisible] = useState(false);
 
   return (
     <Router>
-      <Header />
+      <Header setModalLoginVisible={setModalLoginVisible} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/zoom/:id" element={<RestaurantDetails />} />
@@ -42,14 +53,20 @@ function App() {
           path="/photos/:id"
           element={
             <RestaurantImages
-              setModalPhoto={setModalPhoto}
+              setModalPhotoVisible={setModalPhotoVisible}
               setImageInModal={setImageInModal}
             />
           }
         />
       </Routes>
-      {modalPhoto && (
-        <ModalPhoto imageInModal={imageInModal} setModalPhoto={setModalPhoto} />
+      {modalPhotoVisible && (
+        <ModalPhoto
+          imageInModal={imageInModal}
+          setModalPhotoVisible={setModalPhotoVisible}
+        />
+      )}
+      {modalLoginVisible && (
+        <ModalLogin setModalLoginVisible={setModalLoginVisible} />
       )}
     </Router>
   );

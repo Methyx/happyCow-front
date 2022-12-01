@@ -11,7 +11,7 @@ import IsLoading from "../components/IsLoading";
 // style
 import "../style/RestaurantImages.css";
 
-const RestaurantImages = ({ setModalPhoto, setImageInModal }) => {
+const RestaurantImages = ({ setModalPhotoVisible, setImageInModal }) => {
   // params dans l'url
   const { id } = useParams();
 
@@ -57,7 +57,7 @@ const RestaurantImages = ({ setModalPhoto, setImageInModal }) => {
                   <img
                     onClick={() => {
                       setImageInModal(item);
-                      setModalPhoto(true);
+                      setModalPhotoVisible(true);
                     }}
                     key={index}
                     src={item}

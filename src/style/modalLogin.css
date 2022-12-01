@@ -1,0 +1,99 @@
+.modalLogin-root {
+  z-index: 1000;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgb(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+}
+.modalLogin {
+  background-color: white;
+  width: 850px;
+  height: 550px;
+  border-radius: 15px;
+  display: flex;
+}
+
+/* LEFT SIDE */
+.modalLogin .left-side {
+  width: 375px;
+  height: 100%;
+  background-image: url(../img/login-social.jpg);
+  background-size: cover;
+  border-bottom-left-radius: 15px;
+  border-top-left-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.modalLogin .left-side h2 {
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+  margin: 20px 30px;
+}
+.modalLogin .left-side h3 {
+  color: white;
+  font-size: 22px;
+  margin: 0 30px;
+}
+
+/* RIGHT SIDE */
+.modalLogin .right-side {
+  width: calc(100% - 375px);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.modalLogin .right-side .close {
+  margin: 15px;
+  height: 40px;
+  width: 40px;
+  font-size: 20px;
+  border-radius: 50%;
+  background-color: white;
+  border: 1px solid gray;
+  align-self: flex-end;
+}
+.modalLogin .right-side .selection {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+}
+.selection p {
+  font-size: 24px;
+  font-weight: 500;
+  margin: 10px 30px;
+  padding-bottom: 10px;
+}
+.selection p:hover {
+  cursor: pointer;
+}
+.selection .selected {
+  border-bottom: 5px solid var(--happyCow-color);
+}
+.modalLogin .right-side .form {
+  margin-top: 20px;
+  width: 80%;
+  align-items: flex-start;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 899px) {
+  .modalLogin {
+    width: 100%;
+  }
+  .modalLogin .left-side {
+    display: none;
+  }
+  .modalLogin .right-side {
+    width: 100%;
+  }
+}
