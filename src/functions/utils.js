@@ -10,7 +10,7 @@ export const checkEmail = (email) => {
 export const checkPassword = (password) => {
   let result = true;
   if (password) {
-    result = password.length >= 8;
+    result = password.length >= 4;
   }
   return result;
 };

@@ -1,6 +1,7 @@
 // major imports
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from "react";
+import Cookies from "js-cookie";
 
 // style
 import "./App.css";
@@ -13,6 +14,9 @@ import RestaurantImages from "./pages/RestaurantImages";
 import ModalPhoto from "./components/ModalPhoto";
 import ModalLogin from "./components/ModalLogin";
 
+// functions
+import handleUser from "./functions/handleUser";
+
 // FontAwesome
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -23,6 +27,7 @@ import {
   faLink,
   faPeopleArrows,
   faEye,
+  faUpload,
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
   faBars,
@@ -31,21 +36,39 @@ library.add(
   faPhone,
   faLink,
   faPeopleArrows,
-  faEye
+  faEye,
+  faUpload
 );
 
 //
 // App
 //
 function App() {
+  // Init
+  let favorites = [];
+  if (Cookies.get("happyCowFavorites")) {
+    favorites = JSON.parse(Cookies.get("happyCowFavorites"));
+  }
+
   // UseSates
   const [modalPhotoVisible, setModalPhotoVisible] = useState(false);
   const [imageInModal, setImageInModal] = useState("");
   const [modalLoginVisible, setModalLoginVisible] = useState(false);
+  const [user, setUser] = useState({
+    token: Cookies.get("happyCowToken") || null,
+    username: Cookies.get("happyCowUser") || null,
+    favorites: favorites || null,
+    avatar: null,
+  });
 
   return (
     <Router>
-      <Header setModalLoginVisible={setModalLoginVisible} />
+      <Header
+        setModalLoginVisible={setModalLoginVisible}
+        user={user}
+        setUser={setUser}
+        handleUser={handleUser}
+      />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/zoom/:id" element={<RestaurantDetails />} />
@@ -66,7 +89,10 @@ function App() {
         />
       )}
       {modalLoginVisible && (
-        <ModalLogin setModalLoginVisible={setModalLoginVisible} />
+        <ModalLogin
+          setModalLoginVisible={setModalLoginVisible}
+          setUser={setUser}
+        />
       )}
     </Router>
   );

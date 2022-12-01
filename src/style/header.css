@@ -1,5 +1,5 @@
 header {
-  height: 60px;
+  height: 70px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -30,6 +30,10 @@ header .menu {
   align-items: center;
   gap: 20px;
 }
+header .right {
+  display: flex;
+  align-items: center;
+}
 header .right .sign {
   height: 40px;
   background-color: var(--happyCow-color);
@@ -42,6 +46,18 @@ header .right .sign {
 }
 header .right .sign:hover {
   background-color: #a58ad4;
+}
+header .right .username {
+  color: var(--happyCow-color);
+  font-weight: 600;
+  margin: 0 20px;
+}
+header .right .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--happyCow-color);
+  object-fit: cover;
 }
 
 /* RESPONSIVE */

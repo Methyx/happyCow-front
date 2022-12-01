@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 // style
 import "../style/header.css";
@@ -9,7 +10,11 @@ import logo from "../img/HappyCow_Logo_Head_Text.svg";
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Header = ({ setModalLoginVisible }) => {
+const Header = ({ setModalLoginVisible, user, setUser, handleUser }) => {
+  useEffect(() => {
+    handleUser("load", user, setUser);
+  }, []);
+
   return (
     <header>
       <div className="left">
@@ -24,14 +29,29 @@ const Header = ({ setModalLoginVisible }) => {
         </div>
       </div>
       <div className="right">
-        <button
-          className="sign"
-          onClick={() => {
-            setModalLoginVisible(true);
-          }}
-        >
-          Login / Join
-        </button>
+        {user.token ? (
+          <>
+            <img src={user.avatar} alt="avatar" className="avatar" />
+            <span className="username">{user.username}</span>
+            <button
+              className="sign"
+              onClick={() => {
+                handleUser("remove", null, setUser);
+              }}
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <button
+            className="sign"
+            onClick={() => {
+              setModalLoginVisible(true);
+            }}
+          >
+            Login / Join
+          </button>
+        )}
       </div>
     </header>
   );

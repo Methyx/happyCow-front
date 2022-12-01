@@ -7,7 +7,7 @@ import SignUp from "./SignUp";
 // style
 import "../style/modalLogin.css";
 
-const ModalLogin = ({ setModalLoginVisible }) => {
+const ModalLogin = ({ setModalLoginVisible, setUser }) => {
   // States
   const [form, setForm] = useState("login");
 
@@ -53,7 +53,19 @@ const ModalLogin = ({ setModalLoginVisible }) => {
             </p>
           </div>
           <div className="form">
-            {form === "login" ? <Login /> : form === "signup" && <SignUp />}
+            {form === "login" ? (
+              <Login
+                setUser={setUser}
+                setModalLoginVisible={setModalLoginVisible}
+              />
+            ) : (
+              form === "signup" && (
+                <SignUp
+                  setUser={setUser}
+                  setModalLoginVisible={setModalLoginVisible}
+                />
+              )
+            )}
           </div>
         </div>
       </div>
