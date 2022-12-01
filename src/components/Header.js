@@ -4,8 +4,9 @@ import { useEffect } from "react";
 // style
 import "../style/header.css";
 
-// logos
+// images
 import logo from "../img/HappyCow_Logo_Head_Text.svg";
+import nobody from "../img/Unknown_person.jpg";
 
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -31,7 +32,11 @@ const Header = ({ setModalLoginVisible, user, setUser, handleUser }) => {
       <div className="right">
         {user.token ? (
           <>
-            <img src={user.avatar} alt="avatar" className="avatar" />
+            <img
+              src={user.avatar ? user.avatar : nobody}
+              alt="avatar"
+              className="avatar"
+            />
             <span className="username">{user.username}</span>
             <button
               className="sign"

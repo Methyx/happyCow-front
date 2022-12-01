@@ -32,7 +32,8 @@ const Login = ({ setUser, setModalLoginVisible }) => {
     }
     setIsBusy(true);
     try {
-      let url = "https://site--happycow-back--gw6mlgwnmzwz.code.run/user/login";
+      const url =
+        "https://site--happycow-back--gw6mlgwnmzwz.code.run/user/login";
       const response = await axios.post(url, {
         email: email,
         password: password,

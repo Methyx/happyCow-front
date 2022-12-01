@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
 
 // style
 import "../style/signup.css";
 
 // functions
 import { checkEmail, checkPassword } from "../functions/utils";
+import handleUser from "../functions/handleUser";
 
 import nobody from "../img/Unknown_person.jpg";
 
@@ -19,9 +21,10 @@ const SignUp = ({ setUser, setModalLoginVisible }) => {
   const [isPasswordValid, setIsPasswordValid] = useState(true);
   const [message, setMessage] = useState({ text: "", color: "black" });
   const [viewPassword, setViewPassword] = useState(false);
+  const [isBusy, setIsBusy] = useState(false);
 
   // function
-  const handleSignUp = (event) => {
+  const handleSignUp = async (event) => {
     event.preventDefault();
     setMessage({ text: "", color: "black" });
     if (!email || !password || !isEmailValid || !isPasswordValid) {
@@ -29,6 +32,39 @@ const SignUp = ({ setUser, setModalLoginVisible }) => {
         text: "Please enter valid Email and Password",
         color: "red",
       });
+      return;
+    }
+    setIsBusy(true);
+    try {
+      const url =
+        "https://site--happycow-back--gw6mlgwnmzwz.code.run/user/signup";
+      const formData = new FormData();
+      formData.append("email", email);
+      formData.append("username", username);
+      formData.append("password", password);
+      formData.append("picture", avatar);
+
+      const response = await axios.post(url, formData);
+      handleUser("login", response.data, setUser);
+      setMessage({
+        text: `Welcome ${response.data.account.username} !`,
+        color: "green",
+      });
+      setIsBusy(false);
+      setTimeout(() => {
+        setModalLoginVisible(false);
+        document.body.style.overflow = "auto";
+      }, 1000);
+    } catch (error) {
+      if (error.response?.data.message) {
+        setMessage({ text: error.response.data.message, color: "red" });
+      } else {
+        setMessage({
+          text: `An error occurs : ${error.message}`,
+          color: "red",
+        });
+      }
+      setIsBusy(false);
     }
   };
 
@@ -138,9 +174,11 @@ const SignUp = ({ setUser, setModalLoginVisible }) => {
         </div>
 
         {/* SUBMIT */}
-        <button type="submit" className="submit">
-          Register
-        </button>
+        {!isBusy && (
+          <button type="submit" className="submit">
+            Register
+          </button>
+        )}
 
         {/* MESSAGE */}
         {message.text && (

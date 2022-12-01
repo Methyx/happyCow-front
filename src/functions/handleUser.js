@@ -7,14 +7,16 @@ const handleUser = async (action, user, setUser) => {
     setUser({
       token: user.token,
       username: user.account.username,
-      favorites: user.favorites,
-      avatar: user.account.avatar.secure_url,
+      favorites: user.favorites || [],
+      avatar: user.account.avatar?.secure_url || null,
     });
     Cookies.set("happyCowToken", user.token, { expires: 7 });
     Cookies.set("happyCowUser", user.account.username, { expires: 7 });
-    Cookies.set("happyCowFavorites", JSON.stringify(user.favorites), {
-      expires: 7,
-    });
+    if (user.favorites) {
+      Cookies.set("happyCowFavorites", JSON.stringify(user.favorites), {
+        expires: 7,
+      });
+    }
     return;
   } else if (action === "load") {
     // HERE user has been build with data in Cookies. We need to get avatar from backend
