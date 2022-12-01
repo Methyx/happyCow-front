@@ -34,6 +34,13 @@ header .right {
   display: flex;
   align-items: center;
 }
+header .right .user {
+  display: flex;
+  align-items: center;
+}
+header .right .user:hover {
+  cursor: pointer;
+}
 header .right .sign {
   height: 40px;
   background-color: var(--happyCow-color);

@@ -20,6 +20,7 @@ const handleUser = async (action, user, setUser) => {
     return;
   } else if (action === "load") {
     // HERE user has been build with data in Cookies. We need to get avatar from backend
+    // Return the email for the account page
     try {
       const url =
         "https://site--happycow-back--gw6mlgwnmzwz.code.run/user/update";
@@ -31,9 +32,11 @@ const handleUser = async (action, user, setUser) => {
       const newUser = { ...user };
       newUser.avatar = response.data.avatar;
       setUser(newUser);
-      return;
+      console.log("handleUser, email : ", response.data.email);
+      return response.data.email;
     } catch (error) {
       console.log(error.message);
+      console.log(error.response?.data.message);
     }
   } else if (action === "save") {
   } else if (action === "remove") {
