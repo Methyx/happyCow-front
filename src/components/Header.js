@@ -13,7 +13,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Header = ({ setModalLoginVisible, user, setUser, handleUser }) => {
   useEffect(() => {
-    handleUser("load", user, setUser);
+    if (user.token) {
+      handleUser("load", user, setUser);
+    }
   }, []);
 
   return (

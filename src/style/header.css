@@ -6,6 +6,11 @@ header {
   justify-content: space-between;
   padding: 0 20px;
   border-bottom: 2px solid lightgrey;
+  background-color: white;
+  z-index: 2000;
+  position: sticky;
+  top: 0;
+  left: 0;
 }
 header .left {
   display: flex;

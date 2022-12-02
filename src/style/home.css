@@ -1,16 +1,80 @@
+.home-page {
+  margin-bottom: 35px;
+}
+
+.top-home-banner {
+  width: 100%;
+  height: 250px;
+  margin-bottom: 20px;
+  position: relative;
+}
+.top-home-banner .banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.top-home-banner .tear-img {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+.top-home-banner .search {
+  position: absolute;
+  top: 40%;
+  left: 25%;
+  line-height: 30px;
+  width: 50%;
+  font-size: 18px;
+  padding-left: 10px;
+}
+.restaurants h1 {
+  font-weight: 500;
+  font-size: 20px;
+}
+.nbPerPage {
+  text-align: end;
+}
+.nbPerPage input {
+  margin-left: 10px;
+  width: 50px;
+  line-height: 20px;
+}
 .list-of-restaurants {
-  margin: 20px 0;
+  margin: 10px 0;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: calc((100% - 4 * 280px) / 3);
 }
-@media (max-width: 1209px) {
+.handle-page {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 10px;
+  font-size: 20px;
+}
+.handle-page button {
+  font-size: 22px;
+  margin: 0 15px;
+  background-color: var(--happyCow-color);
+  color: white;
+  border-radius: 50%;
+}
+
+@media (max-width: 1180px) {
   .list-of-restaurants {
-    justify-content: space-around;
+    gap: calc((100% - 3 * 280px) / 2);
+  }
+}
+@media (max-width: 890px) {
+  .list-of-restaurants {
+    gap: calc((100% - 2 * 280px));
   }
 }
 @media (max-width: 619px) {
+  .top-home-banner {
+    height: 200px;
+  }
   .list-of-restaurants {
     margin: 20px 0;
     justify-content: center;

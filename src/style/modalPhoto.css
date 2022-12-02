@@ -13,7 +13,7 @@
 .modalPhoto {
   background-color: black;
   width: 85%;
-  height: 90%;
+  height: calc(100% - 200px);
   display: flex;
   flex-direction: column;
   align-items: center;
