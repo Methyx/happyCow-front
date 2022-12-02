@@ -39,7 +39,7 @@ const ModalLogin = ({ setModalLoginVisible, setUser }) => {
               onClick={() => {
                 setForm("login");
               }}
-              className={form === "login" && "selected"}
+              className={form === "login" ? "selected" : ""}
             >
               Login
             </p>
@@ -47,7 +47,7 @@ const ModalLogin = ({ setModalLoginVisible, setUser }) => {
               onClick={() => {
                 setForm("signup");
               }}
-              className={form === "signup" && "selected"}
+              className={form === "signup" ? "selected" : ""}
             >
               Sign Up
             </p>

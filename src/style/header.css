@@ -76,3 +76,23 @@ header .right .avatar {
     display: none;
   }
 }
+
+@media (max-width: 550px) {
+  header {
+    height: 100px;
+  }
+  header .logo {
+    width: 160px;
+  }
+  header .left {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
+  header .icon-menu {
+    margin-top: 10px;
+  }
+
+  header .right .user {
+    flex-direction: column;
+  }
+}

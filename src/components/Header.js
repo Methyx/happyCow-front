@@ -31,13 +31,15 @@ const Header = ({ setModalLoginVisible, user, setUser, handleUser }) => {
       </div>
       <div className="right">
         {user.token ? (
-          <Link to="/user" className="user">
-            <img
-              src={user.avatar ? user.avatar : nobody}
-              alt="avatar"
-              className="avatar"
-            />
-            <span className="username">{user.username}</span>
+          <>
+            <Link to="/user" className="user">
+              <img
+                src={user.avatar ? user.avatar : nobody}
+                alt="avatar"
+                className="avatar"
+              />
+              <p className="username">{user.username}</p>
+            </Link>
             <button
               className="sign"
               onClick={() => {
@@ -46,7 +48,7 @@ const Header = ({ setModalLoginVisible, user, setUser, handleUser }) => {
             >
               Logout
             </button>
-          </Link>
+          </>
         ) : (
           <button
             className="sign"

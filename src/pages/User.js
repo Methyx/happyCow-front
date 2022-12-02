@@ -1,16 +1,15 @@
 import { Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";
 
 // component
 import IsLoading from "../components/IsLoading";
 
 // style
-import "../style/signup.css";
+import "../style/user.css";
 
 // functions
-import { checkEmail, checkPassword } from "../functions/utils";
+import { checkEmail } from "../functions/utils";
 import handleUser from "../functions/handleUser";
 
 import nobody from "../img/Unknown_person.jpg";
@@ -19,83 +18,71 @@ const User = ({ user, setUser }) => {
   // STATES
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [avatar, setAvatar] = useState(null);
+  const [newAvatarPicture, setNewAvatarPicture] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isEmailValid, setIsEmailValid] = useState(true);
-  const [isPasswordValid, setIsPasswordValid] = useState(true);
   const [message, setMessage] = useState({ text: "", color: "black" });
-  const [viewPassword, setViewPassword] = useState(false);
   const [isBusy, setIsBusy] = useState(false);
 
   // function
   const handleUpdateUser = async (event) => {
     event.preventDefault();
     setMessage({ text: "", color: "black" });
-    if (!email || !password || !isEmailValid || !isPasswordValid) {
+    if (!email || !isEmailValid) {
       setMessage({
-        text: "Please enter valid Email and Password",
+        text: "Please enter valid Email",
         color: "red",
       });
       return;
     }
     setIsBusy(true);
-    try {
-      const url =
-        "https://site--happycow-back--gw6mlgwnmzwz.code.run/user/update";
-      const formData = new FormData();
-      formData.append("email", email);
-      formData.append("username", username);
-      formData.append("password", password);
-      formData.append("picture", avatar);
-
-      const response = await axios.post(url, formData, {
-        header: {
-          Authorization: "Bearer " + user.token,
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      handleUser("login", response.data, setUser);
+    const save = await handleUser(
+      "save",
+      {
+        token: user.token,
+        email: email,
+        username: username,
+        avatar: newAvatarPicture,
+      },
+      setUser
+    );
+    if (save === "ok") {
+      setNewAvatarPicture(null);
       setMessage({
-        text: `Updated your account, ${response.data.account.username} !`,
+        text: `${user.username}, your account is updated !`,
         color: "green",
       });
+      setTimeout(() => {
+        setMessage({ text: "", color: "black" });
+      }, 1000);
       setIsBusy(false);
-    } catch (error) {
-      if (error.response?.data.message) {
-        setMessage({ text: error.response.data.message, color: "red" });
-      } else {
-        setMessage({
-          text: `An error occurs : ${error.message}`,
-          color: "red",
-        });
-      }
-      setIsBusy(false);
+    } else {
+      setMessage({ text: save, color: "red" });
     }
+    setIsBusy(false);
   };
 
   // UseEffect
   useEffect(() => {
     const waitForEmail = async () => {
       const mail = await handleUser("load", user, setUser);
-      console.log("mail = ", mail);
       setUsername(user.username);
       setEmail(mail);
       setAvatar(user.avatar);
       setIsLoading(false);
     };
-    console.log("user : ", user);
     waitForEmail();
   }, []);
 
   return (
-    <>
+    <div className="container">
       {user.token ? (
         <>
           {isLoading ? (
             <IsLoading />
           ) : (
-            <div className="signup-form">
+            <div className="user-account">
               <form onSubmit={handleUpdateUser}>
                 {/* EMAIL */}
                 {isEmailValid ? (
@@ -131,38 +118,6 @@ const User = ({ user, setUser }) => {
                   }}
                 />
 
-                {/* PASSWORD */}
-                {isPasswordValid ? (
-                  <h4>Password</h4>
-                ) : (
-                  <h4>
-                    Password
-                    <span className="warning">
-                      password must have at least 4 characters
-                    </span>
-                  </h4>
-                )}
-                <div className="password">
-                  <input
-                    className="text"
-                    type={viewPassword ? "text" : "password"}
-                    placeholder="Choose your password"
-                    value={password}
-                    onChange={(event) => {
-                      setPassword(event.target.value);
-                      setIsPasswordValid(checkPassword(event.target.value));
-                      setMessage({ text: "", color: "black" });
-                    }}
-                  />
-                  <FontAwesomeIcon
-                    icon="eye"
-                    className="eye"
-                    onClick={() => {
-                      setViewPassword(!viewPassword);
-                    }}
-                  />
-                </div>
-
                 {/* AVATAR */}
                 <div className="avatar">
                   <h4>Avatar</h4>
@@ -180,6 +135,7 @@ const User = ({ user, setUser }) => {
                       accept="image/*"
                       onChange={(event) => {
                         if (event.target.files.length > 0) {
+                          setNewAvatarPicture(event.target.files[0]);
                           setAvatar(URL.createObjectURL(event.target.files[0]));
                         }
                       }}
@@ -188,6 +144,9 @@ const User = ({ user, setUser }) => {
                       <label
                         onClick={() => {
                           setAvatar(null);
+                          if (user.avatar) {
+                            setNewAvatarPicture("delete");
+                          }
                         }}
                       >
                         Delete image
@@ -216,7 +175,7 @@ const User = ({ user, setUser }) => {
       ) : (
         <Navigate to="/" />
       )}
-    </>
+    </div>
   );
 };
 

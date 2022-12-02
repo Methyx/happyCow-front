@@ -5,3 +5,14 @@
   flex-wrap: wrap;
   gap: 15px;
 }
+@media (max-width: 1209px) {
+  .list-of-restaurants {
+    justify-content: space-around;
+  }
+}
+@media (max-width: 619px) {
+  .list-of-restaurants {
+    margin: 20px 0;
+    justify-content: center;
+  }
+}
