@@ -20,12 +20,32 @@
 }
 .top-home-banner .search {
   position: absolute;
-  top: 40%;
+  top: 20%;
   left: 25%;
-  line-height: 30px;
   width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+.top-home-banner .search .text-input {
+  line-height: 30px;
+  width: 100%;
   font-size: 18px;
   padding-left: 10px;
+}
+.top-home-banner .search .filters {
+  align-self: flex-end;
+  line-height: 20px;
+  padding: 0 10px;
+  color: white;
+  font-size: 14px;
+  margin-top: 10px;
+  background-color: rgb(0, 0, 0, 0.6);
+}
+.top-home-banner .search .filters:hover {
+  cursor: pointer;
+}
+.top-home-banner .search .filters span {
+  margin-right: 10px;
 }
 .restaurants h1 {
   font-weight: 500;

@@ -1,6 +1,7 @@
 // major imports
 import { useState, useEffect, useRef } from "react";
 import debounce from "lodash.debounce";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // spinner
 import IsLoading from "../components/IsLoading";
@@ -18,10 +19,11 @@ import {
   saveContextHome,
 } from "../functions/handleContextHome";
 
+// image
 import banner from "../img/bg.home.large.webp";
 import tear from "../img/tear.svg";
 
-const Home = () => {
+const Home = ({ setModalFiltersVisible }) => {
   // context
   const [page, setPage] = useState(0);
   const [nbPerPage, setNbPerPage] = useState(0);
@@ -79,16 +81,29 @@ const Home = () => {
       <div className="top-home-banner">
         <img src={banner} className="banner-img" alt="food" />
         <img src={tear} className="tear-img" alt="tear" />
-        <input
-          type="text"
-          placeholder="search"
-          value={stringInput}
-          onChange={(event) => {
-            setStringInput(event.target.value);
-            debounceString(event.target.value);
-          }}
-          className="search"
-        />
+        <div className="search">
+          <input
+            type="text"
+            placeholder="search"
+            value={stringInput}
+            onChange={(event) => {
+              setStringInput(event.target.value);
+              debounceString(event.target.value);
+            }}
+            className="text-input"
+          />
+          <p
+            onClick={() => {
+              setModalFiltersVisible(true);
+            }}
+            className="filters"
+          >
+            <span>
+              <FontAwesomeIcon icon="filter" />
+            </span>
+            more filters
+          </p>
+        </div>
       </div>
       {isLoading ? (
         <IsLoading />

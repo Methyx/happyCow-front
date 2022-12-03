@@ -29,7 +29,9 @@ import {
   faPeopleArrows,
   faEye,
   faUpload,
+  faFilter,
 } from "@fortawesome/free-solid-svg-icons";
+import ModalFilters from "./components/ModalFilters";
 library.add(
   faBars,
   faStar,
@@ -38,7 +40,8 @@ library.add(
   faLink,
   faPeopleArrows,
   faEye,
-  faUpload
+  faUpload,
+  faFilter
 );
 
 //
@@ -55,6 +58,8 @@ function App() {
   const [modalPhotoVisible, setModalPhotoVisible] = useState(false);
   const [imageInModal, setImageInModal] = useState("");
   const [modalLoginVisible, setModalLoginVisible] = useState(false);
+  const [modalFiltersVisible, setModalFiltersVisible] = useState(false);
+
   const [user, setUser] = useState({
     token: Cookies.get("happyCowToken") || null,
     username: Cookies.get("happyCowUser") || null,
@@ -71,7 +76,10 @@ function App() {
         handleUser={handleUser}
       />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={<Home setModalFiltersVisible={setModalFiltersVisible} />}
+        />
         <Route path="/zoom/:id" element={<RestaurantDetails />} />
         <Route
           path="/photos/:id"
@@ -89,6 +97,9 @@ function App() {
           imageInModal={imageInModal}
           setModalPhotoVisible={setModalPhotoVisible}
         />
+      )}
+      {modalFiltersVisible && (
+        <ModalFilters setModalFiltersVisible={setModalFiltersVisible} />
       )}
       {modalLoginVisible && (
         <ModalLogin
