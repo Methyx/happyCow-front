@@ -18,17 +18,17 @@ export const loadContextHome = async (
 ) => {
   const savedContext = await Cookies.get("happyCow-ContextHome");
   if (!savedContext) {
-    setStringInput("");
-    setDebouncedStringInput("");
-    setNbPerPage(12);
-    setDebouncedNbPerPage(12);
-    setPage(1);
+    await setStringInput("");
+    await setDebouncedStringInput("");
+    await setNbPerPage(12);
+    await setDebouncedNbPerPage(12);
+    await setPage(1);
   } else {
     const context = JSON.parse(savedContext);
-    setStringInput(context.stringInput);
-    setDebouncedStringInput(context.stringInput);
-    setNbPerPage(context.nbPerPage || 12);
-    setDebouncedNbPerPage(context.nbPerPage || 12);
-    setPage(context.page || 1);
+    await setStringInput(context.stringInput);
+    await setDebouncedStringInput(context.stringInput);
+    await setNbPerPage(context.nbPerPage || 12);
+    await setDebouncedNbPerPage(context.nbPerPage || 12);
+    await setPage(context.page || 1);
   }
 };

@@ -23,9 +23,9 @@ import tear from "../img/tear.svg";
 
 const Home = () => {
   // context
-  const [page, setPage] = useState(1);
-  const [nbPerPage, setNbPerPage] = useState(12);
-  const [debouncedNbPerPage, setDebouncedNbPerPage] = useState(12);
+  const [page, setPage] = useState(0);
+  const [nbPerPage, setNbPerPage] = useState(0);
+  const [debouncedNbPerPage, setDebouncedNbPerPage] = useState(0);
   const [stringInput, setStringInput] = useState("");
   const [debouncedStringInput, setDebouncedStringInput] = useState("");
 
