@@ -1,5 +1,6 @@
 // major imports
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import debounce from "lodash.debounce";
 
 // spinner
 import IsLoading from "../components/IsLoading";
@@ -12,27 +13,61 @@ import MiniRestaurant from "../components/MiniRestaurant";
 
 // functions
 import loadRestaurantsTab from "../functions/loadRestaurantsTab";
+import {
+  loadContextHome,
+  saveContextHome,
+} from "../functions/handleContextHome";
 
 import banner from "../img/bg.home.large.webp";
 import tear from "../img/tear.svg";
 
 const Home = () => {
-  const [restaurantsTab, setRestaurantsTab] = useState([]);
+  // context
   const [page, setPage] = useState(1);
   const [nbPerPage, setNbPerPage] = useState(12);
+  const [debouncedNbPerPage, setDebouncedNbPerPage] = useState(12);
+  const [stringInput, setStringInput] = useState("");
+  const [debouncedStringInput, setDebouncedStringInput] = useState("");
+
+  const [restaurantsTab, setRestaurantsTab] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [stringSearched, setStringSearched] = useState("");
+  const [isContextLoaded, setIsContextLoaded] = useState(false);
+
+  // debounce
+  const debounceString = useRef(
+    debounce((text) => setDebouncedStringInput(text), 500)
+  ).current;
+  const debounceNbPerPage = useRef(
+    debounce((nb) => {
+      setDebouncedNbPerPage(nb);
+    }, 300)
+  ).current;
+
+  // load context only at the arrival on the page
+  useEffect(() => {
+    loadContextHome(
+      setStringInput,
+      setDebouncedStringInput,
+      setNbPerPage,
+      setDebouncedNbPerPage,
+      setPage
+    );
+    setIsContextLoaded(true);
+  }, []);
 
   useEffect(() => {
-    setIsLoading(true);
-    loadRestaurantsTab(
-      setRestaurantsTab,
-      page,
-      nbPerPage,
-      stringSearched,
-      setIsLoading
-    );
-  }, [page, nbPerPage, stringSearched]);
+    if (isContextLoaded) {
+      setIsLoading(true);
+      loadRestaurantsTab(
+        setRestaurantsTab,
+        page,
+        debouncedNbPerPage,
+        debouncedStringInput,
+        setIsLoading
+      );
+      saveContextHome(stringInput, nbPerPage, page);
+    }
+  }, [isContextLoaded, page, debouncedNbPerPage, debouncedStringInput]);
 
   const nbPages = Math.ceil(restaurantsTab.count / nbPerPage);
 
@@ -44,9 +79,10 @@ const Home = () => {
         <input
           type="text"
           placeholder="search"
-          value={stringSearched}
+          value={stringInput}
           onChange={(event) => {
-            setStringSearched(event.target.value);
+            setStringInput(event.target.value);
+            debounceString(event.target.value);
           }}
           className="search"
         />
@@ -62,11 +98,16 @@ const Home = () => {
               type="number"
               value={nbPerPage}
               onChange={(event) => {
+                setNbPerPage(event.target.value);
                 if (event.target.value > 0) {
-                  const stock = event.target.value;
+                  debounceNbPerPage(event.target.value);
+                } else {
                   setTimeout(() => {
-                    setNbPerPage(stock);
-                  }, 300);
+                    if (event.target.value <= 0) {
+                      setNbPerPage(1);
+                      setDebouncedNbPerPage(1);
+                    }
+                  }, 1000);
                 }
               }}
             />
