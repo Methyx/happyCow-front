@@ -35,7 +35,10 @@ const Home = () => {
 
   // debounce
   const debounceString = useRef(
-    debounce((text) => setDebouncedStringInput(text), 500)
+    debounce((text) => {
+      setDebouncedStringInput(text);
+      setPage(1);
+    }, 500)
   ).current;
   const debounceNbPerPage = useRef(
     debounce((nb) => {
