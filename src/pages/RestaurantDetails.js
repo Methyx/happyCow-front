@@ -10,6 +10,8 @@ import MapPageRestaurant from "../components/MapPageRestaurant";
 // function
 import createStars from "../functions/createStars";
 import loadRestaurantById from "../functions/loadRestaurantById";
+import categoriesIcons from "../functions/categoriesIcons";
+import typeIcons from "../functions/typeIcons";
 
 // style
 import "../style/restaurant.css";
@@ -37,7 +39,15 @@ const RestaurantDetails = () => {
       ) : (
         <div className="restaurant">
           <div className="left-side">
-            <h1>{restaurant.name}</h1>
+            <div className="title">
+              <h1>{restaurant.name}</h1>
+              {categoriesIcons(restaurant.category)}
+              {restaurant.category === 0 && (
+                <div className="restaurant-category">
+                  {typeIcons(restaurant.type)}
+                </div>
+              )}
+            </div>
             <div className="rating">
               {createStars(restaurant.rating)}
               <span>{restaurant.rating}/5</span>

@@ -9,10 +9,26 @@
 .restaurant .right-side {
   width: 38%;
 }
-.restaurant h1 {
+.restaurant .title {
+  display: flex;
+  align-items: center;
+}
+.restaurant .title img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+.restaurant .title h1 {
   font-size: 28px;
   font-weight: 500;
   margin: 20px 0;
+  margin-right: 20px;
+}
+.restaurant .title .restaurant-category {
+  border: 1px solid var(--happyCow-color);
+  border-radius: 5px;
+  padding: 3px 10px;
+  margin-left: 15px;
 }
 .restaurant .rating {
   height: 25px;

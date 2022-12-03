@@ -30,6 +30,7 @@ import {
   faEye,
   faUpload,
   faFilter,
+  faUtensils,
 } from "@fortawesome/free-solid-svg-icons";
 import ModalFilters from "./components/ModalFilters";
 library.add(
@@ -41,7 +42,8 @@ library.add(
   faPeopleArrows,
   faEye,
   faUpload,
-  faFilter
+  faFilter,
+  faUtensils
 );
 
 //

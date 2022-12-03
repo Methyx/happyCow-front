@@ -6,6 +6,7 @@ import "../style/mini-restaurant.css";
 
 // functions
 import createStars from "../functions/createStars";
+import categoriesIcons from "../functions/categoriesIcons";
 
 //
 const MiniRestaurant = ({ restaurant }) => {
@@ -17,7 +18,10 @@ const MiniRestaurant = ({ restaurant }) => {
   return (
     <Link to={`/zoom/${restaurant._id}`} className="mini-restaurant">
       <img src={restaurant.thumbnail} alt="restaurant" />
-      <h3>{restaurant.name}</h3>
+      <div className="title">
+        {categoriesIcons(restaurant.category)}
+        <h3>{restaurant.name}</h3>
+      </div>
       <h4>
         {zipCode} - {city} , {country}
       </h4>

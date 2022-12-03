@@ -9,10 +9,20 @@
   object-fit: cover;
   border-radius: 10px;
 }
-.mini-restaurant h3 {
+.mini-restaurant .title {
+  display: flex;
+  align-items: center;
+}
+.mini-restaurant .title img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+.mini-restaurant .title h3 {
   font-size: 18px;
+  width: 80%;
   font-weight: bold;
-  margin: 10px 0;
+  margin: 10px;
 }
 .mini-restaurant h4 {
   color: gray;
