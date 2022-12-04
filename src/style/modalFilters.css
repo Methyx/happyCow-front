@@ -1,5 +1,5 @@
 .modalFilters-root {
-  z-index: 1000;
+  z-index: 2000;
   height: 100vh;
   width: 100vw;
   position: fixed;
@@ -17,4 +17,37 @@
   height: 600px;
   border-radius: 15px;
   display: flex;
+  flex-direction: column;
+  padding-left: 25px;
+}
+.modalFilters .close {
+  align-self: flex-end;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  margin: 5px 20px;
+}
+.modalFilters .input {
+  margin-bottom: 25px;
+}
+.modalFilters .input input {
+  line-height: 30px;
+  width: 80%;
+  font-size: 18px;
+  padding-left: 10px;
+}
+.modalFilters .input .search-in {
+  display: flex;
+  width: 80%;
+  align-items: center;
+}
+.modalFilters .search-in p {
+  margin-right: 20px;
+}
+
+.modalFilters .input p {
+  font-size: 12px;
+}
+.modalFilters .star:hover {
+  cursor: pointer;
 }
