@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import debounce from "lodash.debounce";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Cookies from "js-cookie";
 
 // spinner
 import IsLoading from "../components/IsLoading";
@@ -25,11 +26,12 @@ import tear from "../img/tear.svg";
 
 const Home = ({ setModalFiltersVisible }) => {
   // context
-  const [page, setPage] = useState(0);
-  const [nbPerPage, setNbPerPage] = useState(0);
-  const [debouncedNbPerPage, setDebouncedNbPerPage] = useState(0);
-  const [stringInput, setStringInput] = useState("");
-  const [debouncedStringInput, setDebouncedStringInput] = useState("");
+
+  const [page, setPage] = useState();
+  const [nbPerPage, setNbPerPage] = useState();
+  const [debouncedNbPerPage, setDebouncedNbPerPage] = useState();
+  const [stringInput, setStringInput] = useState();
+  const [debouncedStringInput, setDebouncedStringInput] = useState();
 
   const [restaurantsTab, setRestaurantsTab] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -101,7 +103,7 @@ const Home = ({ setModalFiltersVisible }) => {
             <span>
               <FontAwesomeIcon icon="filter" />
             </span>
-            more filters
+            see filters
           </p>
         </div>
       </div>

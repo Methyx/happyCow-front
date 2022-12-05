@@ -17,13 +17,7 @@ export const loadContextHome = async (
   setPage
 ) => {
   const savedContext = await Cookies.get("happyCow-ContextHome");
-  if (!savedContext) {
-    await setStringInput("");
-    await setDebouncedStringInput("");
-    await setNbPerPage(12);
-    await setDebouncedNbPerPage(12);
-    await setPage(1);
-  } else {
+  if (savedContext) {
     const context = JSON.parse(savedContext);
     await setStringInput(context.stringInput);
     await setDebouncedStringInput(context.stringInput);

@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const loadRestaurantsTab = async (
   setRestaurantsTab,
@@ -13,6 +14,26 @@ const loadRestaurantsTab = async (
   if (stringSearched) {
     url += "&string=" + stringSearched;
   }
+  const filtersTxt = await Cookies.get("happyCow-ContextFilters");
+  if (filtersTxt) {
+    const filters = JSON.parse(filtersTxt);
+    if (filters.titleOnly) {
+      url += "&nameOnly=true";
+    }
+    if (filters.category) {
+      url += "&category=" + filters.category;
+    }
+    if (filters.type) {
+      url += "&type=" + filters.type;
+    }
+    if (filters.miniRating) {
+      url += "&rating=" + filters.miniRating;
+    }
+    if (filters.favoritesOnly) {
+      // A implémenter plus tard
+    }
+  }
+  console.log(url);
   try {
     const response = await axios.get(url);
     // console.log(response.data);

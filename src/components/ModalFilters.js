@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Switch from "@mui/material/Switch";
 import Checkbox from "@mui/material/Checkbox";
@@ -7,6 +7,12 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import categoriesIcons from "../functions/categoriesIcons";
 import typeIcons from "../functions/typeIcons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+// functions
+import {
+  loadContextFilters,
+  saveContextFilters,
+} from "../functions/handleContextFilters";
 
 // style
 import "../style/modalFilters.css";
@@ -17,8 +23,8 @@ const ModalFilters = ({
   setModalLoginVisible,
 }) => {
   document.body.style.overflow = "hidden";
-
   const [textInput, setTextInput] = useState("");
+  // context : advanced filters
   const [titleOnly, setTitleOnly] = useState(false);
   const [restaurants, setRestaurants] = useState(true);
   const [vegan, setVegan] = useState(true);
@@ -28,9 +34,12 @@ const ModalFilters = ({
   const [vegStore, setVegStore] = useState(true);
   const [iceCream, setIceCream] = useState(true);
   const [others, setOthers] = useState(true);
+  const [miniRating, setMiniRating] = useState(0);
+
+  const [favoritesOnly, setFavoritesOnly] = useState(false);
 
   const [isMiniRating, setIsMiniRating] = useState(false);
-  const [miniRating, setMiniRating] = useState(0);
+  // const [miniRating, setMiniRating] = useState(0);
   const [starColor, setStarColor] = useState([
     "gray",
     "gray",
@@ -38,7 +47,40 @@ const ModalFilters = ({
     "gray",
     "gray",
   ]);
-  const [favoritesOnly, setFavoritesOnly] = useState(false);
+
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    loadContextFilters(
+      setRestaurants,
+      setHealthStore,
+      setVegStore,
+      setIceCream,
+      setOthers,
+      setVegan,
+      setVegetarian,
+      setVegOption,
+      setTitleOnly,
+      setIsMiniRating,
+      setMiniRating,
+      setFavoritesOnly
+    );
+    setIsReady(true);
+  }, []);
+
+  useEffect(() => {
+    if (isMiniRating) {
+      const newStarColor = [...starColor];
+      for (let i = 0; i <= 5; i++) {
+        if (i <= miniRating) {
+          newStarColor[i] = "gold";
+        } else {
+          newStarColor[i] = "gray";
+        }
+      }
+      setStarColor(newStarColor);
+    }
+  }, [isReady]);
 
   return (
     <div className="modalFilters-root">
@@ -305,6 +347,26 @@ const ModalFilters = ({
                 }
               />
             </div>
+            <button
+              onClick={() => {
+                saveContextFilters(
+                  restaurants,
+                  healthStore,
+                  vegStore,
+                  iceCream,
+                  others,
+                  vegan,
+                  vegetarian,
+                  vegOption,
+                  titleOnly,
+                  isMiniRating,
+                  miniRating,
+                  favoritesOnly
+                );
+              }}
+            >
+              Save Filters
+            </button>
           </div>
         </div>
       </div>
