@@ -63,6 +63,7 @@ function App() {
   const [imageInModal, setImageInModal] = useState("");
   const [modalLoginVisible, setModalLoginVisible] = useState(false);
   const [modalFiltersVisible, setModalFiltersVisible] = useState(false);
+  const [reloadHome, setReloadHome] = useState(false);
 
   const [user, setUser] = useState({
     token: Cookies.get("happyCowToken") || null,
@@ -82,7 +83,13 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={<Home setModalFiltersVisible={setModalFiltersVisible} />}
+          element={
+            <Home
+              setModalFiltersVisible={setModalFiltersVisible}
+              reloadHome={reloadHome}
+              setReloadHome={setReloadHome}
+            />
+          }
         />
         <Route path="/zoom/:id" element={<RestaurantDetails />} />
         <Route
@@ -107,6 +114,7 @@ function App() {
           setModalFiltersVisible={setModalFiltersVisible}
           token={user.token}
           setModalLoginVisible={setModalLoginVisible}
+          setReloadHome={setReloadHome}
         />
       )}
       {modalLoginVisible && (

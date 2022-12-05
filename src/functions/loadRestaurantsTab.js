@@ -6,6 +6,7 @@ const loadRestaurantsTab = async (
   page,
   nbPerPage,
   stringSearched,
+  titleOnly,
   setIsLoading
 ) => {
   let url = "https://site--happycow-back--gw6mlgwnmzwz.code.run/restaurants";
@@ -14,12 +15,13 @@ const loadRestaurantsTab = async (
   if (stringSearched) {
     url += "&string=" + stringSearched;
   }
+  if (titleOnly) {
+    url += "&nameOnly=true";
+  }
   const filtersTxt = await Cookies.get("happyCow-ContextFilters");
   if (filtersTxt) {
     const filters = JSON.parse(filtersTxt);
-    if (filters.titleOnly) {
-      url += "&nameOnly=true";
-    }
+
     if (filters.category) {
       url += "&category=" + filters.category;
     }

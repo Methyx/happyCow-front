@@ -2,7 +2,9 @@
 import { useState, useEffect, useRef } from "react";
 import debounce from "lodash.debounce";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Cookies from "js-cookie";
+
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 // spinner
 import IsLoading from "../components/IsLoading";
@@ -24,7 +26,7 @@ import {
 import banner from "../img/bg.home.large.webp";
 import tear from "../img/tear.svg";
 
-const Home = ({ setModalFiltersVisible }) => {
+const Home = ({ setModalFiltersVisible, reloadHome, setReloadHome }) => {
   // context
 
   const [page, setPage] = useState();
@@ -32,7 +34,7 @@ const Home = ({ setModalFiltersVisible }) => {
   const [debouncedNbPerPage, setDebouncedNbPerPage] = useState();
   const [stringInput, setStringInput] = useState();
   const [debouncedStringInput, setDebouncedStringInput] = useState();
-
+  const [titleOnly, setTitleOnly] = useState(false);
   const [restaurantsTab, setRestaurantsTab] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isContextLoaded, setIsContextLoaded] = useState(false);
@@ -70,11 +72,20 @@ const Home = ({ setModalFiltersVisible }) => {
         page,
         debouncedNbPerPage,
         debouncedStringInput,
+        titleOnly,
         setIsLoading
       );
       saveContextHome(stringInput, nbPerPage, page);
+      setReloadHome(false);
     }
-  }, [isContextLoaded, page, debouncedNbPerPage, debouncedStringInput]);
+  }, [
+    isContextLoaded,
+    page,
+    debouncedNbPerPage,
+    debouncedStringInput,
+    titleOnly,
+    reloadHome,
+  ]);
 
   const nbPages = Math.ceil(restaurantsTab.count / nbPerPage);
 
@@ -92,19 +103,42 @@ const Home = ({ setModalFiltersVisible }) => {
               setStringInput(event.target.value);
               debounceString(event.target.value);
             }}
-            className="text-input"
           />
-          <p
-            onClick={() => {
-              setModalFiltersVisible(true);
-            }}
-            className="filters"
-          >
-            <span>
-              <FontAwesomeIcon icon="filter" />
-            </span>
-            see filters
-          </p>
+          <div className="search-in">
+            <div>
+              <p>
+                <p style={{ color: titleOnly ? "darkgray" : "white" }}>
+                  Name & Description
+                </p>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={titleOnly}
+                      size="small"
+                      color="default"
+                      onChange={(event) => {
+                        setTitleOnly(event.target.checked);
+                      }}
+                    />
+                  }
+                />
+                <span style={{ color: titleOnly ? "white" : "darkgray" }}>
+                  Name Only
+                </span>
+              </p>
+            </div>
+            <div
+              className="filters"
+              onClick={() => {
+                setModalFiltersVisible(true);
+              }}
+            >
+              <span>
+                <FontAwesomeIcon icon="filter" />
+              </span>
+              see filters
+            </div>
+          </div>
         </div>
       </div>
       {isLoading ? (

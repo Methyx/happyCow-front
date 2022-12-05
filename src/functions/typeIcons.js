@@ -28,7 +28,7 @@ const typeIcons = (type) => {
           vegetarian
         </div>
       );
-    case "veg-option":
+    case "veg-options":
       return (
         <div
           className="type-icon"

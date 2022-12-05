@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 
-import Switch from "@mui/material/Switch";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
@@ -21,11 +20,12 @@ const ModalFilters = ({
   setModalFiltersVisible,
   token,
   setModalLoginVisible,
+  setReloadHome,
 }) => {
   document.body.style.overflow = "hidden";
-  const [textInput, setTextInput] = useState("");
+
   // context : advanced filters
-  const [titleOnly, setTitleOnly] = useState(false);
+
   const [restaurants, setRestaurants] = useState(true);
   const [vegan, setVegan] = useState(true);
   const [vegetarian, setVegetarian] = useState(true);
@@ -60,7 +60,6 @@ const ModalFilters = ({
       setVegan,
       setVegetarian,
       setVegOption,
-      setTitleOnly,
       setIsMiniRating,
       setMiniRating,
       setFavoritesOnly
@@ -99,37 +98,6 @@ const ModalFilters = ({
         >
           X
         </button>
-        <div className="input">
-          <input
-            type="text"
-            placeholder="search"
-            value={textInput}
-            onChange={(event) => {
-              setTextInput(event.target.value);
-            }}
-          />
-          <div className="search-in">
-            <p>Search in :</p>
-            <p>
-              <span style={{ color: titleOnly ? "gray" : "black" }}>
-                Name & Description{" "}
-              </span>
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={titleOnly}
-                    onChange={(event) => {
-                      setTitleOnly(event.target.checked);
-                    }}
-                  />
-                }
-              />
-              <span style={{ color: titleOnly ? "black" : "gray" }}>
-                Name Only
-              </span>
-            </p>
-          </div>
-        </div>
         <div className="two-columns">
           <div className="left-side">
             <div className="restaurants">
@@ -188,7 +156,7 @@ const ModalFilters = ({
                   }
                 />
                 <FormControlLabel
-                  label={typeIcons("veg-option")}
+                  label={typeIcons("veg-options")}
                   checked={vegOption}
                   onChange={(event) => {
                     setVegOption(event.target.checked);
@@ -202,6 +170,7 @@ const ModalFilters = ({
                 />
               </div>
             </div>
+            <br />
             <FormControlLabel
               label={
                 <div style={{ display: "flex", alignItems: "center" }}>
@@ -348,6 +317,7 @@ const ModalFilters = ({
               />
             </div>
             <button
+              className="validation"
               onClick={() => {
                 saveContextFilters(
                   restaurants,
@@ -358,11 +328,13 @@ const ModalFilters = ({
                   vegan,
                   vegetarian,
                   vegOption,
-                  titleOnly,
                   isMiniRating,
                   miniRating,
                   favoritesOnly
                 );
+                setReloadHome(true);
+                setModalFiltersVisible(false);
+                document.body.style.overflow = "auto";
               }}
             >
               Save Filters

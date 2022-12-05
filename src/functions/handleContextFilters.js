@@ -9,7 +9,6 @@ export const saveContextFilters = async (
   vegan,
   vegetarian,
   vegOption,
-  titleOnly,
   isMiniRating,
   miniRating,
   favoritesOnly
@@ -47,7 +46,6 @@ export const saveContextFilters = async (
     type = type.slice(1);
   }
   const filters = {
-    titleOnly: titleOnly,
     category: category,
     type: type,
     favoritesOnly: favoritesOnly,
@@ -69,7 +67,6 @@ export const loadContextFilters = async (
   setVegan,
   setVegetarian,
   setVegOption,
-  setTitleOnly,
   setIsMiniRating,
   setMiniRating,
   setFavoritesOnly
@@ -87,7 +84,6 @@ export const loadContextFilters = async (
     await setVegan(types.includes("vegan"));
     await setVegetarian(types.includes("vegetarian"));
     await setVegOption(types.includes("veg-options"));
-    await setTitleOnly(filters.titleOnly);
     if (filters.miniRating > 0) {
       await setIsMiniRating(true);
       await setMiniRating(filters.miniRating - 1);

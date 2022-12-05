@@ -26,14 +26,26 @@
   display: flex;
   flex-direction: column;
 }
-.top-home-banner .search .text-input {
+.top-home-banner .search input {
   line-height: 30px;
   width: 100%;
   font-size: 18px;
   padding-left: 10px;
 }
+.top-home-banner .search .search-in {
+  padding-left: 10px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.top-home-banner .search .search-in p {
+  display: inline-block;
+  margin-right: 20px;
+}
+
 .top-home-banner .search .filters {
-  align-self: flex-end;
   line-height: 20px;
   padding: 0 10px;
   color: white;
