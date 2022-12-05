@@ -18,7 +18,7 @@
   border-radius: 15px;
   display: flex;
   flex-direction: column;
-  padding-left: 25px;
+  /* padding-left: 25px; */
 }
 .modalFilters .close {
   align-self: flex-end;
@@ -28,11 +28,13 @@
   margin: 5px 20px;
 }
 .modalFilters .input {
+  margin: 0 auto;
   margin-bottom: 25px;
+  width: 80%;
 }
 .modalFilters .input input {
+  width: 100%;
   line-height: 30px;
-  width: 80%;
   font-size: 18px;
   padding-left: 10px;
 }
@@ -44,10 +46,34 @@
 .modalFilters .search-in p {
   margin-right: 20px;
 }
-
 .modalFilters .input p {
   font-size: 12px;
 }
+
+.modalFilters .two-columns {
+  display: flex;
+  margin: 0 10%;
+  width: 100%;
+  justify-content: space-between;
+}
+.modalFilters .left-side {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
+
+.modalFilters .restaurants-types {
+  display: flex;
+  flex-direction: column;
+  margin-left: 50px;
+}
+
+.modalFilters .right-side {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
 .modalFilters .star:hover {
   cursor: pointer;
 }

@@ -31,6 +31,7 @@ import {
   faUpload,
   faFilter,
   faUtensils,
+  faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 import ModalFilters from "./components/ModalFilters";
 library.add(
@@ -43,7 +44,8 @@ library.add(
   faEye,
   faUpload,
   faFilter,
-  faUtensils
+  faUtensils,
+  faHeart
 );
 
 //
@@ -101,7 +103,11 @@ function App() {
         />
       )}
       {modalFiltersVisible && (
-        <ModalFilters setModalFiltersVisible={setModalFiltersVisible} />
+        <ModalFilters
+          setModalFiltersVisible={setModalFiltersVisible}
+          token={user.token}
+          setModalLoginVisible={setModalLoginVisible}
+        />
       )}
       {modalLoginVisible && (
         <ModalLogin

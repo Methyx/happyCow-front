@@ -11,7 +11,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // style
 import "../style/modalFilters.css";
 
-const ModalFilters = ({ setModalFiltersVisible }) => {
+const ModalFilters = ({
+  setModalFiltersVisible,
+  token,
+  setModalLoginVisible,
+}) => {
   document.body.style.overflow = "hidden";
 
   const [textInput, setTextInput] = useState("");
@@ -24,7 +28,9 @@ const ModalFilters = ({ setModalFiltersVisible }) => {
   const [vegStore, setVegStore] = useState(true);
   const [iceCream, setIceCream] = useState(true);
   const [others, setOthers] = useState(true);
-  const [miniRating, setMiniRating] = useState(false);
+
+  const [isMiniRating, setIsMiniRating] = useState(false);
+  const [miniRating, setMiniRating] = useState(0);
   const [starColor, setStarColor] = useState([
     "gray",
     "gray",
@@ -32,6 +38,7 @@ const ModalFilters = ({ setModalFiltersVisible }) => {
     "gray",
     "gray",
   ]);
+  const [favoritesOnly, setFavoritesOnly] = useState(false);
 
   return (
     <div className="modalFilters-root">
@@ -81,181 +88,224 @@ const ModalFilters = ({ setModalFiltersVisible }) => {
             </p>
           </div>
         </div>
-        <div className="restaurants">
-          <FormControlLabel
-            label={
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <FontAwesomeIcon
-                  icon="utensils"
-                  style={{
-                    backgroundColor: "var(--happyCow-color)",
-                    borderRadius: "50%",
-                    borderWidth: 2,
-                    color: "white",
-                    fontSize: "25px",
-                    padding: "9px",
+        <div className="two-columns">
+          <div className="left-side">
+            <div className="restaurants">
+              <FormControlLabel
+                label={
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <FontAwesomeIcon
+                      icon="utensils"
+                      style={{
+                        backgroundColor: "var(--happyCow-color)",
+                        borderRadius: "50%",
+                        borderWidth: 2,
+                        color: "white",
+                        fontSize: "25px",
+                        padding: "9px",
+                      }}
+                    />
+                    <span style={{ marginLeft: "10px" }}> Restaurant</span>
+                  </div>
+                }
+                control={
+                  <Checkbox
+                    sx={{ "& .MuiSvgIcon-root": { fontSize: 35 } }}
+                    checked={restaurants}
+                    onChange={(event) => {
+                      setRestaurants(event.target.checked);
+                    }}
+                  />
+                }
+              />
+              <div className="restaurants-types">
+                <FormControlLabel
+                  label={typeIcons("vegan")}
+                  checked={vegan}
+                  onChange={(event) => {
+                    setVegan(event.target.checked);
+                  }}
+                  control={
+                    <Checkbox
+                      sx={{ "& .MuiSvgIcon-root": { fontSize: 30 } }}
+                      disabled={!restaurants}
+                    />
+                  }
+                />
+                <FormControlLabel
+                  label={typeIcons("vegetarian")}
+                  checked={vegetarian}
+                  onChange={(event) => {
+                    setVegetarian(event.target.checked);
+                  }}
+                  control={
+                    <Checkbox
+                      sx={{ "& .MuiSvgIcon-root": { fontSize: 30 } }}
+                      disabled={!restaurants}
+                    />
+                  }
+                />
+                <FormControlLabel
+                  label={typeIcons("veg-option")}
+                  checked={vegOption}
+                  onChange={(event) => {
+                    setVegOption(event.target.checked);
+                  }}
+                  control={
+                    <Checkbox
+                      sx={{ "& .MuiSvgIcon-root": { fontSize: 30 } }}
+                      disabled={!restaurants}
+                    />
+                  }
+                />
+              </div>
+            </div>
+            <FormControlLabel
+              label={
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  {categoriesIcons(1)}{" "}
+                  <span style={{ marginLeft: "10px" }}> Health Store</span>
+                </div>
+              }
+              control={
+                <Checkbox
+                  sx={{ "& .MuiSvgIcon-root": { fontSize: 35 } }}
+                  checked={healthStore}
+                  onChange={(event) => {
+                    setHealthStore(event.target.checked);
                   }}
                 />
-                <span style={{ marginLeft: "10px" }}> Restaurant</span>
-              </div>
-            }
-            control={
-              <Checkbox
-                sx={{ "& .MuiSvgIcon-root": { fontSize: 35 } }}
-                checked={restaurants}
-                onChange={(event) => {
-                  setRestaurants(event.target.checked);
-                }}
-              />
-            }
-          />
-          <div className="restaurants-types">
+              }
+            />
             <FormControlLabel
-              label={typeIcons("vegan")}
-              checked={vegan}
-              onChange={(event) => {
-                setVegan(event.target.checked);
-              }}
+              label={
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  {categoriesIcons(2)}{" "}
+                  <span style={{ marginLeft: "10px" }}> Veg Store</span>
+                </div>
+              }
               control={
                 <Checkbox
-                  sx={{ "& .MuiSvgIcon-root": { fontSize: 30 } }}
-                  disabled={!restaurants}
+                  sx={{ "& .MuiSvgIcon-root": { fontSize: 35 } }}
+                  checked={vegStore}
+                  onChange={(event) => {
+                    setVegStore(event.target.checked);
+                  }}
                 />
               }
             />
             <FormControlLabel
-              label={typeIcons("vegetarian")}
-              checked={vegetarian}
-              onChange={(event) => {
-                setVegetarian(event.target.checked);
-              }}
+              label={
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  {categoriesIcons(12)}{" "}
+                  <span style={{ marginLeft: "10px" }}> Ice Cream</span>
+                </div>
+              }
               control={
                 <Checkbox
-                  sx={{ "& .MuiSvgIcon-root": { fontSize: 30 } }}
-                  disabled={!restaurants}
+                  sx={{ "& .MuiSvgIcon-root": { fontSize: 35 } }}
+                  checked={iceCream}
+                  onChange={(event) => {
+                    setIceCream(event.target.checked);
+                  }}
                 />
               }
             />
             <FormControlLabel
-              label={typeIcons("veg-option")}
-              checked={vegOption}
-              onChange={(event) => {
-                setVegOption(event.target.checked);
-              }}
+              label={
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  {categoriesIcons(99)}{" "}
+                  <span style={{ marginLeft: "10px" }}> Other</span>
+                </div>
+              }
               control={
                 <Checkbox
-                  sx={{ "& .MuiSvgIcon-root": { fontSize: 30 } }}
-                  disabled={!restaurants}
+                  sx={{ "& .MuiSvgIcon-root": { fontSize: 35 } }}
+                  checked={others}
+                  onChange={(event) => {
+                    setOthers(event.target.checked);
+                  }}
                 />
               }
             />
           </div>
-        </div>
-        <FormControlLabel
-          label={
-            <div style={{ display: "flex", alignItems: "center" }}>
-              {categoriesIcons(1)}{" "}
-              <span style={{ marginLeft: "10px" }}> Health Store</span>
-            </div>
-          }
-          control={
-            <Checkbox
-              sx={{ "& .MuiSvgIcon-root": { fontSize: 35 } }}
-              checked={healthStore}
-              onChange={(event) => {
-                setHealthStore(event.target.checked);
-              }}
-            />
-          }
-        />
-        <FormControlLabel
-          label={
-            <div style={{ display: "flex", alignItems: "center" }}>
-              {categoriesIcons(2)}{" "}
-              <span style={{ marginLeft: "10px" }}> Veg Store</span>
-            </div>
-          }
-          control={
-            <Checkbox
-              sx={{ "& .MuiSvgIcon-root": { fontSize: 35 } }}
-              checked={vegStore}
-              onChange={(event) => {
-                setVegStore(event.target.checked);
-              }}
-            />
-          }
-        />
-        <FormControlLabel
-          label={
-            <div style={{ display: "flex", alignItems: "center" }}>
-              {categoriesIcons(12)}{" "}
-              <span style={{ marginLeft: "10px" }}> Ice Cream</span>
-            </div>
-          }
-          control={
-            <Checkbox
-              sx={{ "& .MuiSvgIcon-root": { fontSize: 35 } }}
-              checked={iceCream}
-              onChange={(event) => {
-                setIceCream(event.target.checked);
-              }}
-            />
-          }
-        />
-        <FormControlLabel
-          label={
-            <div style={{ display: "flex", alignItems: "center" }}>
-              {categoriesIcons(99)}{" "}
-              <span style={{ marginLeft: "10px" }}> Other</span>
-            </div>
-          }
-          control={
-            <Checkbox
-              sx={{ "& .MuiSvgIcon-root": { fontSize: 35 } }}
-              checked={others}
-              onChange={(event) => {
-                setOthers(event.target.checked);
-              }}
-            />
-          }
-        />
-        <div className="rating">
-          <FormControlLabel
-            label="Minimum rating "
-            control={
-              <Checkbox
-                sx={{ "& .MuiSvgIcon-root": { fontSize: 35 } }}
-                checked={miniRating}
-                onChange={(event) => {
-                  setMiniRating(event.target.checked);
-                }}
+          <div className="right-side">
+            <div className="rating">
+              <FormControlLabel
+                label="Minimum rating :"
+                control={
+                  <Checkbox
+                    sx={{ "& .MuiSvgIcon-root": { fontSize: 35 } }}
+                    checked={isMiniRating}
+                    onChange={(event) => {
+                      setIsMiniRating(event.target.checked);
+                      if (!event.target.checked) {
+                        setMiniRating(0);
+                        setStarColor(["gray", "gray", "gray", "gray", "gray"]);
+                      } else {
+                        setMiniRating(1);
+                        setStarColor(["gold", "gray", "gray", "gray", "gray"]);
+                      }
+                    }}
+                  />
+                }
               />
-            }
-          />
-          {[0, 1, 2, 3, 4].map((item) => {
-            return (
-              <FontAwesomeIcon
-                key={item}
-                className="star"
-                icon="star"
-                style={{
-                  color: starColor[item],
-                  visibility: miniRating ? "visible" : "hidden",
-                }}
-                onClick={() => {
-                  const newStarColor = [...starColor];
-                  for (let i = 0; i <= 5; i++) {
-                    if (i <= item) {
-                      newStarColor[i] = "gold";
-                    } else {
-                      newStarColor[i] = "gray";
-                    }
-                  }
-                  setStarColor(newStarColor);
-                }}
+              {[0, 1, 2, 3, 4].map((item) => {
+                return (
+                  <FontAwesomeIcon
+                    key={item}
+                    className="star"
+                    icon="star"
+                    style={{
+                      color: isMiniRating ? starColor[item] : "lightgray",
+                    }}
+                    onClick={() => {
+                      if (isMiniRating) {
+                        const newStarColor = [...starColor];
+                        for (let i = 0; i <= 5; i++) {
+                          if (i <= item) {
+                            newStarColor[i] = "gold";
+                          } else {
+                            newStarColor[i] = "gray";
+                          }
+                        }
+                        setStarColor(newStarColor);
+                        setMiniRating(item);
+                      }
+                    }}
+                  />
+                );
+              })}
+            </div>
+            <div className="favorites-only">
+              <FormControlLabel
+                label={
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <FontAwesomeIcon
+                      icon="heart"
+                      style={{ color: "red", fontSize: "25px" }}
+                    />{" "}
+                    <span style={{ marginLeft: "10px" }}>
+                      Favorites only {!token && "(need login)"}
+                    </span>
+                  </div>
+                }
+                control={
+                  <Checkbox
+                    sx={{ "& .MuiSvgIcon-root": { fontSize: 35 } }}
+                    checked={favoritesOnly}
+                    onChange={(event) => {
+                      if (!token) {
+                        setModalLoginVisible(true);
+                      } else {
+                        setFavoritesOnly(event.target.checked);
+                      }
+                    }}
+                  />
+                }
               />
-            );
-          })}
+            </div>
+          </div>
         </div>
       </div>
     </div>
