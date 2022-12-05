@@ -63,3 +63,25 @@
   font-size: 18px;
   width: 70%;
 }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .modalFilters {
+    width: 90%;
+  }
+}
+@media (max-width: 750px) {
+  .modalFilters {
+    height: 650px;
+  }
+  .modalFilters .two-columns {
+    flex-direction: column;
+  }
+  .modalFilters .right-side,
+  .modalFilters .left-side {
+    width: 100%;
+  }
+  .modalFilters .validation {
+    margin-top: 20px;
+  }
+}

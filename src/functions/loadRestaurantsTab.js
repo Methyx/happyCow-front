@@ -35,7 +35,6 @@ const loadRestaurantsTab = async (
       // A implémenter plus tard
     }
   }
-  console.log(url);
   try {
     const response = await axios.get(url);
     // console.log(response.data);

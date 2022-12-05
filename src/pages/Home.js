@@ -1,10 +1,12 @@
 // major imports
 import { useState, useEffect, useRef } from "react";
 import debounce from "lodash.debounce";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Cookies from "js-cookie";
 
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // spinner
 import IsLoading from "../components/IsLoading";
@@ -57,6 +59,7 @@ const Home = ({ setModalFiltersVisible, reloadHome, setReloadHome }) => {
     loadContextHome(
       setStringInput,
       setDebouncedStringInput,
+      setTitleOnly,
       setNbPerPage,
       setDebouncedNbPerPage,
       setPage
@@ -75,7 +78,7 @@ const Home = ({ setModalFiltersVisible, reloadHome, setReloadHome }) => {
         titleOnly,
         setIsLoading
       );
-      saveContextHome(stringInput, nbPerPage, page);
+      saveContextHome(stringInput, titleOnly, nbPerPage, page);
       setReloadHome(false);
     }
   }, [
@@ -106,37 +109,46 @@ const Home = ({ setModalFiltersVisible, reloadHome, setReloadHome }) => {
           />
           <div className="search-in">
             <div>
-              <p>
-                <p style={{ color: titleOnly ? "darkgray" : "white" }}>
-                  Name & Description
-                </p>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={titleOnly}
-                      size="small"
-                      color="default"
-                      onChange={(event) => {
-                        setTitleOnly(event.target.checked);
-                      }}
-                    />
-                  }
-                />
-                <span style={{ color: titleOnly ? "white" : "darkgray" }}>
-                  Name Only
-                </span>
+              <p style={{ color: titleOnly ? "lightblue" : "white" }}>
+                Name & Description
               </p>
-            </div>
-            <div
-              className="filters"
-              onClick={() => {
-                setModalFiltersVisible(true);
-              }}
-            >
-              <span>
-                <FontAwesomeIcon icon="filter" />
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={titleOnly}
+                    size="small"
+                    color="default"
+                    onChange={(event) => {
+                      setTitleOnly(event.target.checked);
+                    }}
+                  />
+                }
+              />
+              <span style={{ color: titleOnly ? "white" : "lightblue" }}>
+                Name Only
               </span>
-              see filters
+            </div>
+            <div className="filters">
+              <div
+                className="raz-filters"
+                onClick={() => {
+                  Cookies.remove("happyCow-ContextFilters");
+                  setReloadHome(true);
+                }}
+              >
+                raz filters
+              </div>
+              <div
+                className="set-filters"
+                onClick={() => {
+                  setModalFiltersVisible(true);
+                }}
+              >
+                <span>
+                  <FontAwesomeIcon icon="filter" />
+                </span>
+                set filters
+              </div>
             </div>
           </div>
         </div>

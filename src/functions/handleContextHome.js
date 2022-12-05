@@ -1,8 +1,14 @@
 import Cookies from "js-cookie";
 
-export const saveContextHome = async (stringInput, nbPerPage, page) => {
+export const saveContextHome = async (
+  stringInput,
+  titleOnly,
+  nbPerPage,
+  page
+) => {
   const context = JSON.stringify({
     stringInput: stringInput,
+    titleOnly: titleOnly,
     nbPerPage: nbPerPage,
     page: page,
   });
@@ -12,6 +18,7 @@ export const saveContextHome = async (stringInput, nbPerPage, page) => {
 export const loadContextHome = async (
   setStringInput,
   setDebouncedStringInput,
+  setTitleOnly,
   setNbPerPage,
   setDebouncedNbPerPage,
   setPage
@@ -21,6 +28,7 @@ export const loadContextHome = async (
     const context = JSON.parse(savedContext);
     await setStringInput(context.stringInput);
     await setDebouncedStringInput(context.stringInput);
+    await setTitleOnly(context.titleOnly || false);
     await setNbPerPage(context.nbPerPage || 12);
     await setDebouncedNbPerPage(context.nbPerPage || 12);
     await setPage(context.page || 1);
