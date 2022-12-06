@@ -70,7 +70,7 @@ const ModalFilters = ({
   useEffect(() => {
     if (isMiniRating) {
       const newStarColor = [...starColor];
-      for (let i = 0; i <= 5; i++) {
+      for (let i = 0; i < 5; i++) {
         if (i <= miniRating) {
           newStarColor[i] = "gold";
         } else {
@@ -79,7 +79,7 @@ const ModalFilters = ({
       }
       setStarColor(newStarColor);
     }
-  }, [isReady]);
+  }, [isReady, isMiniRating, miniRating, starColor]);
 
   return (
     <div className="modalFilters-root">
@@ -250,13 +250,7 @@ const ModalFilters = ({
                     checked={isMiniRating}
                     onChange={(event) => {
                       setIsMiniRating(event.target.checked);
-                      if (!event.target.checked) {
-                        setMiniRating(0);
-                        setStarColor(["gray", "gray", "gray", "gray", "gray"]);
-                      } else {
-                        setMiniRating(1);
-                        setStarColor(["gold", "gray", "gray", "gray", "gray"]);
-                      }
+                      setMiniRating(0);
                     }}
                   />
                 }
@@ -272,15 +266,15 @@ const ModalFilters = ({
                     }}
                     onClick={() => {
                       if (isMiniRating) {
-                        const newStarColor = [...starColor];
-                        for (let i = 0; i <= 5; i++) {
-                          if (i <= item) {
-                            newStarColor[i] = "gold";
-                          } else {
-                            newStarColor[i] = "gray";
-                          }
-                        }
-                        setStarColor(newStarColor);
+                        // const newStarColor = [...starColor];
+                        // for (let i = 0; i < 5; i++) {
+                        //   if (i <= item) {
+                        //     newStarColor[i] = "gold";
+                        //   } else {
+                        //     newStarColor[i] = "gray";
+                        //   }
+                        // }
+                        // setStarColor(newStarColor);
                         setMiniRating(item);
                       }
                     }}

@@ -11,12 +11,14 @@ import nobody from "../img/Unknown_person.jpg";
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+let remove = false;
+
 const Header = ({ setModalLoginVisible, user, setUser, handleUser }) => {
   useEffect(() => {
-    if (user.token) {
+    if (user.token && !remove) {
       handleUser("load", user, setUser);
     }
-  }, []);
+  }, [user, setUser, handleUser]);
 
   return (
     <header>
@@ -45,6 +47,7 @@ const Header = ({ setModalLoginVisible, user, setUser, handleUser }) => {
             <button
               className="sign"
               onClick={() => {
+                remove = true;
                 handleUser("remove", null, setUser);
               }}
             >

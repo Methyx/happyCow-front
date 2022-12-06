@@ -102,15 +102,15 @@ const handleUser = async (action, user, setUser) => {
     // ====================
     // ====== REMOVE ========
     // ====================
+    await Cookies.remove("happyCowToken");
+    await Cookies.remove("happyCowUser");
+    await Cookies.remove("happyCowFavorites");
     setUser({
       token: null,
       username: null,
       favorites: null,
       avatar: null,
     });
-    Cookies.remove("happyCowToken");
-    Cookies.remove("happyCowUser");
-    Cookies.remove("happyCowFavorites");
   }
 };
 

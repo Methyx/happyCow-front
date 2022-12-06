@@ -25,6 +25,8 @@ const User = ({ user, setUser }) => {
   const [message, setMessage] = useState({ text: "", color: "black" });
   const [isBusy, setIsBusy] = useState(false);
 
+  const [onlyFirstTime, setOnlyFirstTime] = useState(true);
+
   // function
   const handleUpdateUser = async (event) => {
     event.preventDefault();
@@ -72,8 +74,11 @@ const User = ({ user, setUser }) => {
       setAvatar(user.avatar);
       setIsLoading(false);
     };
-    waitForEmail();
-  }, []);
+    if (onlyFirstTime) {
+      waitForEmail();
+      setOnlyFirstTime(false);
+    }
+  }, [user, setUser, onlyFirstTime]);
 
   return (
     <div className="container">

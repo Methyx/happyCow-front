@@ -70,6 +70,9 @@ const Home = ({ setModalFiltersVisible, reloadHome, setReloadHome }) => {
   useEffect(() => {
     if (isContextLoaded) {
       setIsLoading(true);
+      if (reloadHome) {
+        setPage(1);
+      }
       loadRestaurantsTab(
         setRestaurantsTab,
         page,
@@ -78,7 +81,12 @@ const Home = ({ setModalFiltersVisible, reloadHome, setReloadHome }) => {
         titleOnly,
         setIsLoading
       );
-      saveContextHome(stringInput, titleOnly, nbPerPage, page);
+      saveContextHome(
+        debouncedStringInput,
+        titleOnly,
+        debouncedNbPerPage,
+        page
+      );
       setReloadHome(false);
     }
   }, [
@@ -88,6 +96,7 @@ const Home = ({ setModalFiltersVisible, reloadHome, setReloadHome }) => {
     debouncedStringInput,
     titleOnly,
     reloadHome,
+    setReloadHome,
   ]);
 
   const nbPages = Math.ceil(restaurantsTab.count / nbPerPage);
