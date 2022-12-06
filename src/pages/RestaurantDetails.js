@@ -1,5 +1,5 @@
 // major imports
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 // component
@@ -22,6 +22,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const RestaurantDetails = ({ setModalLoginVisible, setUser }) => {
   // params dans l'url
   const { id } = useParams();
+
+  const navigate = useNavigate();
 
   // UseStates
   const [isLoading, setIsLoading] = useState(true);
@@ -63,6 +65,18 @@ const RestaurantDetails = ({ setModalLoginVisible, setUser }) => {
                   toggleFavorite(restaurant._id, setModalLoginVisible, setUser);
                 }}
               />
+            </div>
+            <div
+              className="go-back"
+              onClick={() => {
+                navigate(-1);
+              }}
+            >
+              <FontAwesomeIcon
+                icon="hand-point-left"
+                style={{ marginRight: "10px" }}
+              />
+              back to list
             </div>
             <div className="carousel-place">
               <CarouselPageRestaurant restaurant={restaurant} />

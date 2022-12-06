@@ -58,7 +58,11 @@
 .restaurant .rating .heart:hover {
   cursor: pointer;
 }
-
+.restaurant .go-back:hover {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--happyCow-color);
+}
 .restaurant .carousel-place {
   position: relative;
 }
