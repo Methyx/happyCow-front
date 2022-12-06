@@ -32,8 +32,8 @@ const Home = ({ setModalFiltersVisible, reloadHome, setReloadHome }) => {
   // context
 
   const [page, setPage] = useState();
-  const [nbPerPage, setNbPerPage] = useState();
-  const [debouncedNbPerPage, setDebouncedNbPerPage] = useState();
+  const [nbPerPage, setNbPerPage] = useState(12);
+  const [debouncedNbPerPage, setDebouncedNbPerPage] = useState(12);
   const [stringInput, setStringInput] = useState();
   const [debouncedStringInput, setDebouncedStringInput] = useState();
   const [titleOnly, setTitleOnly] = useState(false);
