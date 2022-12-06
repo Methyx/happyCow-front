@@ -78,6 +78,8 @@ const handleUser = async (action, user, setUser) => {
       } else {
         formData.append("modifyAvatar", false);
       }
+      console.log(user.favorites);
+      formData.append("favorites", JSON.stringify(user.favorites));
       const response = await axios.put(url, formData, {
         headers: {
           Authorization: "Bearer " + user.token,

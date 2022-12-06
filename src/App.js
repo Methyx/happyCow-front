@@ -88,10 +88,20 @@ function App() {
               setModalFiltersVisible={setModalFiltersVisible}
               reloadHome={reloadHome}
               setReloadHome={setReloadHome}
+              setModalLoginVisible={setModalLoginVisible}
+              setUser={setUser}
             />
           }
         />
-        <Route path="/zoom/:id" element={<RestaurantDetails />} />
+        <Route
+          path="/zoom/:id"
+          element={
+            <RestaurantDetails
+              setModalLoginVisible={setModalLoginVisible}
+              setUser={setUser}
+            />
+          }
+        />
         <Route
           path="/photos/:id"
           element={

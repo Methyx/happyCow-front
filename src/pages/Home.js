@@ -28,7 +28,13 @@ import {
 import banner from "../img/bg.home.large.webp";
 import tear from "../img/tear.svg";
 
-const Home = ({ setModalFiltersVisible, reloadHome, setReloadHome }) => {
+const Home = ({
+  setModalFiltersVisible,
+  reloadHome,
+  setReloadHome,
+  setModalLoginVisible,
+  setUser,
+}) => {
   // context
 
   const [page, setPage] = useState();
@@ -193,6 +199,8 @@ const Home = ({ setModalFiltersVisible, reloadHome, setReloadHome }) => {
                 <MiniRestaurant
                   key={item._id}
                   restaurant={item}
+                  setModalLoginVisible={setModalLoginVisible}
+                  setUser={setUser}
                   className="shop"
                 />
               );

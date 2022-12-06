@@ -266,15 +266,6 @@ const ModalFilters = ({
                     }}
                     onClick={() => {
                       if (isMiniRating) {
-                        // const newStarColor = [...starColor];
-                        // for (let i = 0; i < 5; i++) {
-                        //   if (i <= item) {
-                        //     newStarColor[i] = "gold";
-                        //   } else {
-                        //     newStarColor[i] = "gray";
-                        //   }
-                        // }
-                        // setStarColor(newStarColor);
                         setMiniRating(item);
                       }
                     }}

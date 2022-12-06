@@ -3,11 +3,38 @@
   width: 280px;
   margin: 10px 0;
 }
-.mini-restaurant img {
+.mini-restaurant:hover {
+  cursor: zoom-in;
+}
+.mini-restaurant .image-container {
   width: 100%;
   height: 50%;
+  position: relative;
+}
+.mini-restaurant .image-container img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   border-radius: 10px;
+}
+.mini-restaurant .image-container .heart {
+  font-size: 22px;
+  padding: 8px;
+  background-color: white;
+  border: solid 1px gray;
+  border-radius: 50%;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+.mini-restaurant .image-container .heart-red {
+  color: red;
+}
+.mini-restaurant .image-container .heart-gray {
+  color: gray;
+}
+.mini-restaurant .image-container .heart:hover {
+  cursor: pointer;
 }
 .mini-restaurant .title {
   display: flex;

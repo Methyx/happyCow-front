@@ -12,13 +12,14 @@ import createStars from "../functions/createStars";
 import loadRestaurantById from "../functions/loadRestaurantById";
 import categoriesIcons from "../functions/categoriesIcons";
 import typeIcons from "../functions/typeIcons";
+import { isFavorite, toggleFavorite } from "../functions/handleFavorites";
 
 // style
 import "../style/restaurant.css";
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const RestaurantDetails = () => {
+const RestaurantDetails = (setModalLoginVisible, setUser) => {
   // params dans l'url
   const { id } = useParams();
 
@@ -51,6 +52,18 @@ const RestaurantDetails = () => {
             <div className="rating">
               {createStars(restaurant.rating)}
               <span>{restaurant.rating}/5</span>
+              <FontAwesomeIcon
+                icon="heart"
+                className={
+                  isFavorite(restaurant._id)
+                    ? "heart heart-red"
+                    : "heart heart-gray"
+                }
+                onClick={(event) => {
+                  event.stopPropagation();
+                  toggleFavorite(restaurant._id, setModalLoginVisible, setUser);
+                }}
+              />
             </div>
             <div className="carousel-place">
               <CarouselPageRestaurant restaurant={restaurant} />
