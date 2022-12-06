@@ -39,14 +39,13 @@ const ModalFilters = ({
   const [favoritesOnly, setFavoritesOnly] = useState(false);
 
   const [isMiniRating, setIsMiniRating] = useState(false);
-  // const [miniRating, setMiniRating] = useState(0);
-  const [starColor, setStarColor] = useState([
-    "gray",
-    "gray",
-    "gray",
-    "gray",
-    "gray",
-  ]);
+  // const [starColor, setStarColor] = useState([
+  //   "gray",
+  //   "gray",
+  //   "gray",
+  //   "gray",
+  //   "gray",
+  // ]);
 
   const [isReady, setIsReady] = useState(false);
 
@@ -67,19 +66,18 @@ const ModalFilters = ({
     setIsReady(true);
   }, []);
 
-  useEffect(() => {
-    if (isMiniRating) {
-      const newStarColor = [...starColor];
-      for (let i = 0; i < 5; i++) {
-        if (i <= miniRating) {
-          newStarColor[i] = "gold";
-        } else {
-          newStarColor[i] = "gray";
-        }
-      }
-      setStarColor(newStarColor);
-    }
-  }, [isReady, isMiniRating, miniRating, starColor]);
+  // useEffect(() => {
+  //   if (isMiniRating) {
+  //     for (let i = 0; i < 5; i++) {
+  //       if (i <= miniRating) {
+  //         starColor[i] = "gold";
+  //       } else {
+  //         starColor[i] = "gray";
+  //       }
+  //     }
+  //   }
+  //   console.log("MiniRating : ", miniRating);
+  // }, [isReady, isMiniRating, miniRating]);
 
   return (
     <div className="modalFilters-root">
@@ -262,10 +260,17 @@ const ModalFilters = ({
                     className="star"
                     icon="star"
                     style={{
-                      color: isMiniRating ? starColor[item] : "lightgray",
+                      color: isMiniRating
+                        ? item <= miniRating
+                          ? "gold"
+                          : "gray"
+                        : "lightgray",
                     }}
                     onClick={() => {
                       if (isMiniRating) {
+                        setMiniRating(item);
+                      } else {
+                        setIsMiniRating(true);
                         setMiniRating(item);
                       }
                     }}

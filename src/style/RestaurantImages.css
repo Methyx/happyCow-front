@@ -39,6 +39,9 @@
   object-fit: cover;
   border-radius: 10%;
 }
+.all-images .photo-grid img:hover {
+  cursor: zoom-in;
+}
 
 /* RESPONSIVE */
 @media (max-width: 767px) {
