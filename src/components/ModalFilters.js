@@ -47,7 +47,7 @@ const ModalFilters = ({
   //   "gray",
   // ]);
 
-  const [isReady, setIsReady] = useState(false);
+  // const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     loadContextFilters(
@@ -63,7 +63,7 @@ const ModalFilters = ({
       setMiniRating,
       setFavoritesOnly
     );
-    setIsReady(true);
+    // setIsReady(true);
   }, []);
 
   // useEffect(() => {
