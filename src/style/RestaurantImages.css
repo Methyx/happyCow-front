@@ -1,6 +1,6 @@
 .all-images .head {
   border-bottom: 2px solid lightgray;
-  padding: 40px 0;
+  padding: 20px 0;
 }
 
 .all-images h1 {
@@ -12,7 +12,7 @@
   color: var(--happyCow-color);
 }
 .all-images .rating {
-  height: 25px;
+  height: 35px;
   display: flex;
   flex-direction: row;
 }
@@ -20,6 +20,11 @@
   font-size: 14px;
   margin-left: 10px;
   margin-top: 2px;
+}
+.all-images .go-back:hover {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--happyCow-color);
 }
 .all-images .photo-grid {
   margin: 25px 0;

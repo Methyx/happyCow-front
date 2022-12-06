@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 // style
 import "../style/header.css";
@@ -14,28 +14,62 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 let remove = false;
 
 const Header = ({ setModalLoginVisible, user, setUser, handleUser }) => {
+  const navigate = useNavigate();
+
+  // STATE
+  const [showMenu, setShowMenu] = useState(false);
+
   useEffect(() => {
     if (user.token && !remove) {
       handleUser("load", user, setUser);
     }
   }, [user, setUser, handleUser]);
 
+  const location = useLocation().pathname;
+
   return (
-    <header>
+    <header className={showMenu ? "large" : ""}>
       <div className="left">
-        <FontAwesomeIcon icon="bars" className="icon-menu" />
         <Link to={"/"}>
-          <img src={logo} className="logo" alt="logo HappyCow" />
+          <img
+            src={logo}
+            className={showMenu ? "logo back-margin" : "logo"}
+            alt="logo HappyCow"
+          />
         </Link>
-        <div className="menu">
-          <nav>menu 1</nav>
-          <nav>menu 2</nav>
-          <nav>menu 3</nav>
+        <div>
+          <FontAwesomeIcon
+            icon="bars"
+            onClick={() => {
+              setShowMenu(!showMenu);
+            }}
+            className="icon-menu"
+          />
+          <div className={showMenu ? "menu show" : "menu hide"}>
+            <div
+              onClick={() => {
+                setShowMenu(false);
+                navigate("/");
+              }}
+            >
+              <nav className={location === "/" ? "here" : ""}> Explore All</nav>
+            </div>
+            <div
+              onClick={() => {
+                setShowMenu(false);
+                navigate("/AroundMe");
+              }}
+            >
+              <nav className={location === "/AroundMe" ? "here" : ""}>
+                Around Me
+              </nav>
+            </div>
+          </div>
         </div>
       </div>
       <div className="right">
         {user.token ? (
-          <>
+          <div className="user-container">
             <Link to="/user" className="user">
               <img
                 src={user.avatar ? user.avatar : nobody}
@@ -53,7 +87,7 @@ const Header = ({ setModalLoginVisible, user, setUser, handleUser }) => {
             >
               Logout
             </button>
-          </>
+          </div>
         ) : (
           <button
             className="sign"

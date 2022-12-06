@@ -151,7 +151,7 @@ const Home = ({
                   setReloadHome(true);
                 }}
               >
-                raz filters
+                RAZ filters
               </div>
               <div
                 className="set-filters"
@@ -162,7 +162,7 @@ const Home = ({
                 <span>
                   <FontAwesomeIcon icon="filter" />
                 </span>
-                set filters
+                SET filters
               </div>
             </div>
           </div>

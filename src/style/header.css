@@ -2,7 +2,7 @@ header {
   height: 70px;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  /* align-items: center; */
   justify-content: space-between;
   padding: 0 20px;
   border-bottom: 2px solid lightgrey;
@@ -12,32 +12,58 @@ header {
   top: 0;
   left: 0;
 }
+
 header .left {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  margin-top: 10px;
 }
 header .icon-menu {
   font-size: 24px;
   font-weight: bold;
   margin-right: 15px;
+  margin-bottom: 30px;
+  margin-top: 10px;
   display: none;
 }
 header .logo {
   width: 180px;
   object-fit: contain;
+  margin-right: 50px;
 }
 header .menu {
   width: calc(100% - 180px);
-  margin: 0 20px;
+  /* margin: 0 50px; */
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 20px;
 }
+header .menu nav {
+  width: 100px;
+  text-align: center;
+  margin-right: 15px;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 10px;
+}
+header .menu nav:hover {
+  cursor: pointer;
+}
+header .menu .here {
+  border: 1px solid var(--happyCow-color);
+  border-radius: 5px;
+}
 header .right {
   display: flex;
-  align-items: center;
+  margin-top: 10px;
+  /* align-items: center; */
+}
+header .right .user-container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  align-items: flex-start;
 }
 header .right .user {
   display: flex;
@@ -74,11 +100,26 @@ header .right .avatar {
 
 /* RESPONSIVE */
 @media (max-width: 1199px) {
+  .large {
+    height: 170px;
+  }
   header .icon-menu {
     display: block;
   }
   header .menu {
     display: none;
+  }
+  header .show {
+    display: block;
+  }
+  header .hide {
+    display: none;
+  }
+  header .back-margin {
+    margin-left: -100px;
+  }
+  header .left {
+    flex-direction: row-reverse;
   }
 }
 
@@ -86,11 +127,17 @@ header .right .avatar {
   header {
     height: 100px;
   }
+  .large {
+    height: 200px;
+  }
   header .logo {
     width: 160px;
   }
+  header .back-margin {
+    margin-left: 0px;
+  }
   header .left {
-    flex-direction: column-reverse;
+    flex-direction: column;
     align-items: flex-start;
   }
   header .icon-menu {

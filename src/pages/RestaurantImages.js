@@ -1,5 +1,6 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 //functions
 import loadRestaurantById from "../functions/loadRestaurantById";
@@ -14,6 +15,8 @@ import "../style/RestaurantImages.css";
 const RestaurantImages = ({ setModalPhotoVisible, setImageInModal }) => {
   // params dans l'url
   const { id } = useParams();
+
+  const navigate = useNavigate();
 
   // UseStates
   const [isLoading, setIsLoading] = useState(true);
@@ -47,6 +50,18 @@ const RestaurantImages = ({ setModalPhotoVisible, setImageInModal }) => {
               <div className="rating">
                 {createStars(restaurant.rating)}
                 <span>{restaurant.rating}/5</span>
+              </div>
+              <div
+                className="go-back"
+                onClick={() => {
+                  navigate(-1);
+                }}
+              >
+                <FontAwesomeIcon
+                  icon="hand-point-left"
+                  style={{ marginRight: "10px" }}
+                />
+                back to shop
               </div>
             </div>
           </div>
