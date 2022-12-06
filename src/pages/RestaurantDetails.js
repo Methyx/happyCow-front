@@ -19,7 +19,7 @@ import "../style/restaurant.css";
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const RestaurantDetails = (setModalLoginVisible, setUser) => {
+const RestaurantDetails = ({ setModalLoginVisible, setUser }) => {
   // params dans l'url
   const { id } = useParams();
 
@@ -60,7 +60,6 @@ const RestaurantDetails = (setModalLoginVisible, setUser) => {
                     : "heart heart-gray"
                 }
                 onClick={(event) => {
-                  event.stopPropagation();
                   toggleFavorite(restaurant._id, setModalLoginVisible, setUser);
                 }}
               />
