@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import IsLoading from "../components/IsLoading";
 import CarouselPageRestaurant from "../components/CarouselPageRestaurant";
 import MapPageRestaurant from "../components/MapPageRestaurant";
+import NearbyList from "../components/NearbyList";
 
 // function
 import createStars from "../functions/createStars";
@@ -52,7 +53,7 @@ const RestaurantDetails = ({ setModalLoginVisible, setUser }) => {
               )}
             </div>
             <div className="rating">
-              {createStars(restaurant.rating)}
+              {createStars(restaurant.rating, 0)}
               <span>{restaurant.rating}/5</span>
               <FontAwesomeIcon
                 icon="heart"
@@ -69,7 +70,7 @@ const RestaurantDetails = ({ setModalLoginVisible, setUser }) => {
             <div
               className="go-back"
               onClick={() => {
-                navigate(-1);
+                navigate("/");
               }}
             >
               <FontAwesomeIcon
@@ -115,6 +116,11 @@ const RestaurantDetails = ({ setModalLoginVisible, setUser }) => {
                 Facebook
               </a>
             </p>
+            <NearbyList
+              nearbyIds={restaurant.nearbyPlacesIds}
+              setModalLoginVisible={setModalLoginVisible}
+              setUser={setUser}
+            />
           </div>
         </div>
       )}

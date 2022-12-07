@@ -201,6 +201,8 @@ const Home = ({
                   restaurant={item}
                   setModalLoginVisible={setModalLoginVisible}
                   setUser={setUser}
+                  isDescription={true}
+                  top={0}
                   className="shop"
                 />
               );

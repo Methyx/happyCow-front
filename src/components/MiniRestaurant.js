@@ -11,7 +11,13 @@ import categoriesIcons from "../functions/categoriesIcons";
 import { isFavorite, toggleFavorite } from "../functions/handleFavorites";
 
 //
-const MiniRestaurant = ({ restaurant, setModalLoginVisible, setUser }) => {
+const MiniRestaurant = ({
+  restaurant,
+  setModalLoginVisible,
+  setUser,
+  isDescription,
+  top,
+}) => {
   const addressTab = restaurant.address.split(",");
   const zipCode = addressTab.pop();
   const country = addressTab.pop();
@@ -47,10 +53,10 @@ const MiniRestaurant = ({ restaurant, setModalLoginVisible, setUser }) => {
         {zipCode} - {city} , {country}
       </h4>
       <div className="rating">
-        {createStars(restaurant.rating)}
+        {createStars(restaurant.rating, top)}
         <span>{restaurant.rating}/5</span>
       </div>
-      <p>{restaurant.description}</p>
+      {isDescription && <p>{restaurant.description}</p>}
     </div>
   );
 };

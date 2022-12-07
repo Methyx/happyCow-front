@@ -1,9 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const createStars = (rating) => {
+const createStars = (rating, top) => {
   const goldStars = [];
   const emptyStars = [];
   const width = 90;
+  const height = 20;
   for (let i = 1; i <= 5; i++) {
     emptyStars.push(
       <FontAwesomeIcon
@@ -28,12 +29,13 @@ const createStars = (rating) => {
       <p
         style={{
           position: "absolute",
-          top: 1,
+          height: `${height}px`,
+          top: `${top}px`,
           left: 0,
           display: "flex",
           width: `${(width / 5) * rating}px`,
-          flexWrap: "nowrap",
-          overflowX: "hidden",
+          // flexWrap: "nowrap",
+          overflow: "hidden",
         }}
       >
         {goldStars}

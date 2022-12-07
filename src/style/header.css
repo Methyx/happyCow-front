@@ -132,6 +132,7 @@ header .right .avatar {
   }
   header .logo {
     width: 160px;
+    margin-right: 0px;
   }
   header .back-margin {
     margin-left: 0px;

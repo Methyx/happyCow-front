@@ -24,12 +24,17 @@ const MapPageRestaurant = ({ restaurant }) => {
   useEffect(() => {
     const getPosition = async () => {
       if ("geolocation" in navigator) {
-        await navigator.geolocation.getCurrentPosition((position) => {
-          setPosition({
-            lng: position.coords.longitude,
-            lat: position.coords.latitude,
-          });
+        const permission = await navigator.permissions.query({
+          name: "geolocation",
         });
+        if (permission.state === "granted") {
+          await navigator.geolocation.getCurrentPosition((position) => {
+            setPosition({
+              lng: position.coords.longitude,
+              lat: position.coords.latitude,
+            });
+          });
+        }
       }
     };
     getPosition();

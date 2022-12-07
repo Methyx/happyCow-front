@@ -1,0 +1,23 @@
+.nearbyList {
+  width: 100%;
+  height: 640px;
+  margin-top: 20px;
+  margin-bottom: 60px;
+}
+.nearbyList h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+.nearbyList .nearby-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: scroll;
+  border: 1px solid gray;
+}
+.nearbyList .mini-restaurant {
+  height: 250px;
+}
