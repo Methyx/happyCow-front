@@ -48,7 +48,7 @@ const RestaurantImages = ({ setModalPhotoVisible, setImageInModal }) => {
                 }`}
               </h1>
               <div className="rating">
-                {createStars(restaurant.rating)}
+                {createStars(restaurant.rating, 0)}
                 <span>{restaurant.rating}/5</span>
               </div>
               <div
