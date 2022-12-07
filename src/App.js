@@ -15,6 +15,7 @@ import User from "./pages/User";
 import ModalPhoto from "./components/ModalPhoto";
 import ModalLogin from "./components/ModalLogin";
 import AroundMe from "./pages/AroundMe";
+import Footer from "./components/Footer";
 
 // functions
 import handleUser from "./functions/handleUser";
@@ -117,6 +118,7 @@ function App() {
         <Route path="/user" element={<User user={user} setUser={setUser} />} />
         <Route path="/AroundMe" element={<AroundMe />} />
       </Routes>
+      <Footer />
       {modalPhotoVisible && (
         <ModalPhoto
           imageInModal={imageInModal}
