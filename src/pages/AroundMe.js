@@ -11,6 +11,7 @@ import IsLoading from "../components/IsLoading";
 
 // functions
 import findShopsAroundMe from "../functions/findShopsAroundMe";
+import categoriesIconsLeaflet from "../functions/categoriesIconsLeaflet";
 
 // style
 import "../style/aroundMe.css";
@@ -19,16 +20,13 @@ const AroundMe = () => {
   // Icon Leaflet
   const homeIcon = new L.Icon({
     iconUrl: require("../img/here.svg").default,
-    iconSize: new L.Point(40, 47),
+    iconSize: new L.Point(40, 40),
   });
-  // const placeIcon = new L.Icon({
-  //   iconUrl: require("../img/placeholder.svg").default,
-  //   iconSize: new L.Point(40, 47),
-  // });
 
   // UseState
   const [position, setPosition] = useState({});
   const [isLocated, setIsLocated] = useState(false);
+  const [shopsAround, setShopsAround] = useState([]);
 
   // UseEffect
   useEffect(() => {
@@ -37,7 +35,6 @@ const AroundMe = () => {
         const permission = await navigator.permissions.query({
           name: "geolocation",
         });
-        console.log("permission : ", permission.state);
         if (permission.state !== "denied") {
           await navigator.geolocation.getCurrentPosition(
             (success) => {
@@ -65,12 +62,17 @@ const AroundMe = () => {
       }
     };
     getPosition();
-    findShopsAroundMe();
   }, []);
 
+  useEffect(() => {
+    if (isLocated) {
+      findShopsAroundMe(position.lng, position.lat, 10000, setShopsAround);
+    }
+  }, [isLocated, position]);
+
   return (
-    <>
-      {isLocated ? (
+    <div className="container">
+      {isLocated && shopsAround.length ? (
         <div className="around-me">
           ========= PAGE in Construction ==========
           <MapContainer
@@ -86,12 +88,22 @@ const AroundMe = () => {
             <Marker position={[position.lat, position.lng]} icon={homeIcon}>
               <Popup>my position</Popup>
             </Marker>
+            {shopsAround.length &&
+              shopsAround.map((shop) => {
+                return (
+                  <Marker
+                    key={shop._id}
+                    position={[shop.location.lat, shop.location.lng]}
+                    icon={categoriesIconsLeaflet(shop.category)}
+                  />
+                );
+              })}
           </MapContainer>
         </div>
       ) : (
         <IsLoading />
       )}
-    </>
+    </div>
   );
 };
 export default AroundMe;

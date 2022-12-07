@@ -19,32 +19,32 @@ function deg2rad(deg) {
   return deg * (Math.PI / 180);
 }
 
-const findShopsAroundMe = async (long, lat, distance) => {
+const findShopsAroundMe = async (long, lat, distance, setData) => {
   let allData = [];
   const resultData = [];
   try {
     const url =
-      "https://site--happycow-back--gw6mlgwnmzwz.code.run/restaurants";
+      "https://site--happycow-back--gw6mlgwnmzwz.code.run/restaurants?nbPerPage=9999";
     const response = await axios.get(url);
-    allData = response.data;
+    allData = response.data.restaurants;
+    for (let i = 0; i < allData.length; i++) {
+      const distanceCalculated =
+        getDistanceFromLatLonInKm(
+          lat,
+          long,
+          allData[i].location.lat,
+          allData[i].location.lng
+        ) * 1000;
+      if (distanceCalculated <= distance) {
+        resultData.push(allData[i]);
+      }
+    }
+    setData(resultData);
+    return;
   } catch (error) {
     console.log(error.message);
     return;
   }
-  for (let i = 0; i <= allData.length; i++) {
-    const distanceCalculated =
-      getDistanceFromLatLonInKm(
-        lat,
-        long,
-        allData[i].location.lat,
-        allData[i].location.lng
-      ) * 1000;
-    if (distanceCalculated <= distance) {
-      resultData.push(allData[i]);
-    }
-  }
-  console.log(resultData);
-  return resultData;
 };
 
 export default findShopsAroundMe;

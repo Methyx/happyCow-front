@@ -10,11 +10,11 @@ const MapPageRestaurant = ({ restaurant }) => {
   // Icon Leaflet
   const homeIcon = new L.Icon({
     iconUrl: require("../img/here.svg").default,
-    iconSize: new L.Point(40, 47),
+    iconSize: new L.Point(40, 40),
   });
   const placeIcon = new L.Icon({
     iconUrl: require("../img/placeholder.svg").default,
-    iconSize: new L.Point(40, 47),
+    iconSize: new L.Point(30, 40),
   });
 
   // UseState
