@@ -13,7 +13,7 @@ const NearbyList = ({ nearbyIds, setModalLoginVisible, setUser }) => {
 
   useEffect(() => {
     loadNearbyTab(nearbyIds, setData, setIsLoaded);
-  }, []);
+  }, [nearbyIds]);
 
   return (
     <div className="nearbyList">

@@ -9,6 +9,9 @@ import "leaflet/dist/leaflet.css";
 // component
 import IsLoading from "../components/IsLoading";
 
+// functions
+import findShopsAroundMe from "../functions/findShopsAroundMe";
+
 // style
 import "../style/aroundMe.css";
 
@@ -62,6 +65,7 @@ const AroundMe = () => {
       }
     };
     getPosition();
+    findShopsAroundMe();
   }, []);
 
   return (
