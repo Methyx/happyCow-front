@@ -21,10 +21,10 @@ const AroundMe = () => {
     iconUrl: require("../img/here.svg").default,
     iconSize: new L.Point(40, 47),
   });
-  const placeIcon = new L.Icon({
-    iconUrl: require("../img/placeholder.svg").default,
-    iconSize: new L.Point(40, 47),
-  });
+  // const placeIcon = new L.Icon({
+  //   iconUrl: require("../img/placeholder.svg").default,
+  //   iconSize: new L.Point(40, 47),
+  // });
 
   // UseState
   const [position, setPosition] = useState({});

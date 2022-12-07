@@ -20,14 +20,31 @@ function deg2rad(deg) {
 }
 
 const findShopsAroundMe = async (long, lat, distance) => {
+  let allData = [];
+  const resultData = [];
   try {
     const url =
       "https://site--happycow-back--gw6mlgwnmzwz.code.run/restaurants";
     const response = await axios.get(url);
-    const allData = response.data;
+    allData = response.data;
   } catch (error) {
     console.log(error.message);
+    return;
   }
+  for (let i = 0; i <= allData.length; i++) {
+    const distanceCalculated =
+      getDistanceFromLatLonInKm(
+        lat,
+        long,
+        allData[i].location.lat,
+        allData[i].location.lng
+      ) * 1000;
+    if (distanceCalculated <= distance) {
+      resultData.push(allData[i]);
+    }
+  }
+  console.log(resultData);
+  return resultData;
 };
 
 export default findShopsAroundMe;
