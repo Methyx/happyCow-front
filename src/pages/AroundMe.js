@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Leaflet
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
@@ -22,6 +23,8 @@ const AroundMe = () => {
     iconUrl: require("../img/here.svg").default,
     iconSize: new L.Point(40, 40),
   });
+
+  const navigate = useNavigate();
 
   // UseState
   const [position, setPosition] = useState({});
@@ -74,7 +77,6 @@ const AroundMe = () => {
     <div className="container">
       {isLocated && shopsAround.length ? (
         <div className="around-me">
-          ========= PAGE in Construction ==========
           <MapContainer
             className="map-container"
             center={[position.lat, position.lng]}
@@ -95,7 +97,17 @@ const AroundMe = () => {
                     key={shop._id}
                     position={[shop.location.lat, shop.location.lng]}
                     icon={categoriesIconsLeaflet(shop.category)}
-                  />
+                  >
+                    <Popup>
+                      <button
+                        onClick={() => {
+                          navigate(`/zoom/${shop._id}`);
+                        }}
+                      >
+                        {shop.name}
+                      </button>
+                    </Popup>
+                  </Marker>
                 );
               })}
           </MapContainer>
