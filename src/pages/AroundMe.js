@@ -68,6 +68,7 @@ const AroundMe = () => {
     <>
       {isLocated ? (
         <div className="around-me">
+          ========= PAGE in Construction ==========
           <MapContainer
             className="map-container"
             center={[position.lat, position.lng]}
