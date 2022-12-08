@@ -163,7 +163,7 @@ const AroundMe = ({ setModalFiltersVisible, reloadPage, setReloadPage }) => {
               </div>
               <div className="right">
                 <p>distance (meters) :</p>
-                <Box sx={{ width: "70%" }}>
+                <Box sx={{ width: "45%" }}>
                   <Slider
                     value={distance}
                     min={100}
