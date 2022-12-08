@@ -149,14 +149,17 @@ const AroundMe = ({ setModalFiltersVisible, reloadPage, setReloadPage }) => {
               </div>
             </div>
             <div className="distance">
-              <div
-                className="raz-position"
-                onClick={() => {
-                  Cookies.remove("happyCow-Position");
-                  setReloadPage(true);
-                }}
-              >
-                RAZ Position
+              <div className="gps">
+                <img src={require("../img/here.svg").default} alt="" />
+                <div
+                  className="raz-position"
+                  onClick={() => {
+                    Cookies.remove("happyCow-Position");
+                    setReloadPage(true);
+                  }}
+                >
+                  RAZ Position
+                </div>
               </div>
               <div className="right">
                 <p>distance (meters) :</p>

@@ -60,6 +60,14 @@
 .around-me .raz-position:hover {
   cursor: pointer;
 }
+.around-me .distance .gps {
+  display: flex;
+}
+.around-me .distance .gps img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
 .around-me .distance .right {
   display: flex;
   width: calc(100% - 250px);
@@ -118,8 +126,11 @@
     font-size: 12px;
     margin-right: 50px;
   }
+  .around-me .distance .gps {
+    width: 100%;
+  }
   .around-me .distance .right {
     align-items: center;
-    width: calc(100% - 50px);
+    width: 100%;
   }
 }

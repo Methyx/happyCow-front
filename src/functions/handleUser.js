@@ -64,7 +64,7 @@ const handleUser = async (action, user, setUser) => {
     // avatar must be "delete" if avatar of account has to be deleted
     // else avatar contains the object to upload (NOT the link)
     try {
-      //   const url = "http://localhost:4000/user/update";
+      // const url = "http://localhost:4000/user/update";
       const url =
         "https://site--happycow-back--gw6mlgwnmzwz.code.run/user/update";
       const formData = new FormData();
@@ -106,6 +106,9 @@ const handleUser = async (action, user, setUser) => {
     await Cookies.remove("happyCowToken");
     await Cookies.remove("happyCowUser");
     await Cookies.remove("happyCowFavorites");
+    await Cookies.remove("happyCow-ContextFilters");
+    await Cookies.remove("happyCow-Position");
+    await Cookies.remove("happyCow-distance");
     setUser({
       token: null,
       username: null,
