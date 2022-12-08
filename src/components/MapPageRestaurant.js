@@ -51,7 +51,7 @@ const MapPageRestaurant = ({ restaurant }) => {
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       />
       <Marker position={[position.lat, position.lng]} icon={homeIcon}>
-        <Popup>my position</Popup>
+        <Popup>your position</Popup>
       </Marker>
       <Marker
         position={[restaurant.location.lat, restaurant.location.lng]}

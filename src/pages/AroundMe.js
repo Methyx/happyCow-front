@@ -1,7 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import debounce from "lodash.debounce";
+import Slider from "@mui/material/Slider";
+import Box from "@mui/material/Box";
 
 // Leaflet
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
@@ -33,7 +36,15 @@ const AroundMe = ({ setModalFiltersVisible, reloadPage, setReloadPage }) => {
   const [isLocated, setIsLocated] = useState(false);
   const [shopsAround, setShopsAround] = useState([]);
   const [isSearchingAround, setIsSearchingAround] = useState(true);
+  const [distance, setDistance] = useState(500);
+  const [debouncedDistance, setDebouncedDistance] = useState(500);
   // const [reloadPage, setReloadPage] = useState(false);
+
+  const debounceDistance = useRef(
+    debounce((nb) => {
+      setDebouncedDistance(nb);
+    }, 1000)
+  ).current;
 
   // UseEffect
   useEffect(() => {
@@ -76,74 +87,94 @@ const AroundMe = ({ setModalFiltersVisible, reloadPage, setReloadPage }) => {
       findShopsAroundMe(
         position.lng,
         position.lat,
-        10000,
+        debouncedDistance,
         setShopsAround,
         setIsSearchingAround
       );
     }
     setReloadPage(false);
-  }, [isLocated, position, reloadPage, setReloadPage]);
+  }, [isLocated, position, debouncedDistance, reloadPage, setReloadPage]);
 
   return (
     <div className="container page-around-me">
       {isLocated && !isSearchingAround ? (
         <div className="around-me">
-          <div className="filters">
-            <div
-              className="raz-filters"
-              onClick={() => {
-                Cookies.remove("happyCow-ContextFilters");
-                setReloadPage(true);
-              }}
-            >
-              RAZ filters
+          <div className="map-header">
+            <div className="filters">
+              <div
+                className="raz-filters"
+                onClick={() => {
+                  Cookies.remove("happyCow-ContextFilters");
+                  setReloadPage(true);
+                }}
+              >
+                RAZ filters
+              </div>
+              <div
+                className="set-filters"
+                onClick={() => {
+                  setModalFiltersVisible(true);
+                }}
+              >
+                <span>
+                  <FontAwesomeIcon icon="filter" />
+                </span>
+                SET filters
+              </div>
             </div>
-            <div
-              className="set-filters"
-              onClick={() => {
-                setModalFiltersVisible(true);
-              }}
-            >
-              <span>
-                <FontAwesomeIcon icon="filter" />
-              </span>
-              SET filters
+            <div className="distance">
+              <p>distance (meters) :</p>
+              <Box sx={{ width: "60%" }}>
+                <Slider
+                  value={distance}
+                  min={100}
+                  max={10000}
+                  step={100}
+                  valueLabelDisplay="on"
+                  onChange={(event) => {
+                    setDistance(event.target.value);
+                    debounceDistance(event.target.value);
+                  }}
+                />
+              </Box>
             </div>
           </div>
-          <MapContainer
-            className="map-container"
-            center={[position.lat, position.lng]}
-            zoom={12}
-            maxZoom={18}
-          >
-            <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            />
-            <Marker position={[position.lat, position.lng]} icon={homeIcon}>
-              <Popup>my position</Popup>
-            </Marker>
-            {shopsAround.length &&
-              shopsAround.map((shop) => {
-                return (
-                  <Marker
-                    key={shop._id}
-                    position={[shop.location.lat, shop.location.lng]}
-                    icon={categoriesIconsLeaflet(shop.category)}
-                  >
-                    <Popup>
-                      <button
-                        onClick={() => {
-                          navigate(`/zoom/${shop._id}`);
-                        }}
-                      >
-                        {shop.name}
-                      </button>
-                    </Popup>
-                  </Marker>
-                );
-              })}
-          </MapContainer>
+          <div className="map-inside">
+            <MapContainer
+              className="map-container"
+              center={[position.lat, position.lng]}
+              zoom={12}
+              maxZoom={18}
+            >
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+              />
+              <Marker position={[position.lat, position.lng]} icon={homeIcon}>
+                <Popup>your position</Popup>
+              </Marker>
+              {shopsAround.length &&
+                shopsAround.map((shop) => {
+                  return (
+                    <Marker
+                      key={shop._id}
+                      position={[shop.location.lat, shop.location.lng]}
+                      icon={categoriesIconsLeaflet(shop.category)}
+                    >
+                      <Popup>
+                        <button
+                          onClick={() => {
+                            navigate(`/zoom/${shop._id}`);
+                          }}
+                        >
+                          {shop.name}
+                        </button>
+                      </Popup>
+                    </Marker>
+                  );
+                })}
+            </MapContainer>
+          </div>
         </div>
       ) : (
         <div className="waiting">
