@@ -36,13 +36,18 @@ const AroundMe = ({ setModalFiltersVisible, reloadPage, setReloadPage }) => {
   const [isLocated, setIsLocated] = useState(false);
   const [shopsAround, setShopsAround] = useState([]);
   const [isSearchingAround, setIsSearchingAround] = useState(true);
-  const [distance, setDistance] = useState(500);
-  const [debouncedDistance, setDebouncedDistance] = useState(500);
+  const [distance, setDistance] = useState(
+    Cookies.get("happyCow-distance") || 500
+  );
+  const [debouncedDistance, setDebouncedDistance] = useState(
+    Cookies.get("happyCow-distance") || 500
+  );
   // const [reloadPage, setReloadPage] = useState(false);
 
   const debounceDistance = useRef(
     debounce((nb) => {
       setDebouncedDistance(nb);
+      Cookies.set("happyCow-distance", nb);
     }, 1000)
   ).current;
 
