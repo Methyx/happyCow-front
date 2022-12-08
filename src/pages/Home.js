@@ -30,8 +30,8 @@ import tear from "../img/tear.svg";
 
 const Home = ({
   setModalFiltersVisible,
-  reloadHome,
-  setReloadHome,
+  reloadPage,
+  setReloadPage,
   setModalLoginVisible,
   setUser,
 }) => {
@@ -76,7 +76,7 @@ const Home = ({
   useEffect(() => {
     if (isContextLoaded) {
       setIsLoading(true);
-      if (reloadHome) {
+      if (reloadPage) {
         setPage(1);
       }
       loadRestaurantsTab(
@@ -93,7 +93,7 @@ const Home = ({
         debouncedNbPerPage,
         page
       );
-      setReloadHome(false);
+      setReloadPage(false);
     }
   }, [
     isContextLoaded,
@@ -101,8 +101,8 @@ const Home = ({
     debouncedNbPerPage,
     debouncedStringInput,
     titleOnly,
-    reloadHome,
-    setReloadHome,
+    reloadPage,
+    setReloadPage,
   ]);
 
   const nbPages = Math.ceil(restaurantsTab.count / nbPerPage);
@@ -148,7 +148,7 @@ const Home = ({
                 className="raz-filters"
                 onClick={() => {
                   Cookies.remove("happyCow-ContextFilters");
-                  setReloadHome(true);
+                  setReloadPage(true);
                 }}
               >
                 RAZ filters

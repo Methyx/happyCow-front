@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // Leaflet
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
@@ -17,7 +19,7 @@ import categoriesIconsLeaflet from "../functions/categoriesIconsLeaflet";
 // style
 import "../style/aroundMe.css";
 
-const AroundMe = () => {
+const AroundMe = ({ setModalFiltersVisible, reloadPage, setReloadPage }) => {
   // Icon Leaflet
   const homeIcon = new L.Icon({
     iconUrl: require("../img/here.svg").default,
@@ -30,6 +32,8 @@ const AroundMe = () => {
   const [position, setPosition] = useState({});
   const [isLocated, setIsLocated] = useState(false);
   const [shopsAround, setShopsAround] = useState([]);
+  const [isSearchingAround, setIsSearchingAround] = useState(true);
+  // const [reloadPage, setReloadPage] = useState(false);
 
   // UseEffect
   useEffect(() => {
@@ -69,14 +73,43 @@ const AroundMe = () => {
 
   useEffect(() => {
     if (isLocated) {
-      findShopsAroundMe(position.lng, position.lat, 10000, setShopsAround);
+      findShopsAroundMe(
+        position.lng,
+        position.lat,
+        10000,
+        setShopsAround,
+        setIsSearchingAround
+      );
     }
-  }, [isLocated, position]);
+    setReloadPage(false);
+  }, [isLocated, position, reloadPage, setReloadPage]);
 
   return (
-    <div className="container">
-      {isLocated && shopsAround.length ? (
+    <div className="container page-around-me">
+      {isLocated && !isSearchingAround ? (
         <div className="around-me">
+          <div className="filters">
+            <div
+              className="raz-filters"
+              onClick={() => {
+                Cookies.remove("happyCow-ContextFilters");
+                setReloadPage(true);
+              }}
+            >
+              RAZ filters
+            </div>
+            <div
+              className="set-filters"
+              onClick={() => {
+                setModalFiltersVisible(true);
+              }}
+            >
+              <span>
+                <FontAwesomeIcon icon="filter" />
+              </span>
+              SET filters
+            </div>
+          </div>
           <MapContainer
             className="map-container"
             center={[position.lat, position.lng]}
@@ -113,7 +146,15 @@ const AroundMe = () => {
           </MapContainer>
         </div>
       ) : (
-        <IsLoading />
+        <div className="waiting">
+          {!isLocated ? (
+            <p>Creating Map ...</p>
+          ) : (
+            <p>Searching around you ...</p>
+          )}
+
+          <IsLoading />
+        </div>
       )}
     </div>
   );

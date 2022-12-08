@@ -20,7 +20,7 @@ const ModalFilters = ({
   setModalFiltersVisible,
   token,
   setModalLoginVisible,
-  setReloadHome,
+  setReloadPage,
 }) => {
   document.body.style.overflow = "hidden";
 
@@ -322,7 +322,7 @@ const ModalFilters = ({
                   miniRating,
                   favoritesOnly
                 );
-                setReloadHome(true);
+                setReloadPage(true);
                 setModalFiltersVisible(false);
                 document.body.style.overflow = "auto";
               }}

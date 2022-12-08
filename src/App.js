@@ -67,7 +67,7 @@ function App() {
   const [imageInModal, setImageInModal] = useState("");
   const [modalLoginVisible, setModalLoginVisible] = useState(false);
   const [modalFiltersVisible, setModalFiltersVisible] = useState(false);
-  const [reloadHome, setReloadHome] = useState(false);
+  const [reloadPage, setReloadPage] = useState(false);
 
   const [user, setUser] = useState({
     token: Cookies.get("happyCowToken") || null,
@@ -90,8 +90,8 @@ function App() {
           element={
             <Home
               setModalFiltersVisible={setModalFiltersVisible}
-              reloadHome={reloadHome}
-              setReloadHome={setReloadHome}
+              reloadPage={reloadPage}
+              setReloadPage={setReloadPage}
               setModalLoginVisible={setModalLoginVisible}
               setUser={setUser}
             />
@@ -116,7 +116,16 @@ function App() {
           }
         />
         <Route path="/user" element={<User user={user} setUser={setUser} />} />
-        <Route path="/AroundMe" element={<AroundMe />} />
+        <Route
+          path="/AroundMe"
+          element={
+            <AroundMe
+              setModalFiltersVisible={setModalFiltersVisible}
+              reloadPage={reloadPage}
+              setReloadPage={setReloadPage}
+            />
+          }
+        />
       </Routes>
       <Footer />
       {modalPhotoVisible && (
@@ -130,7 +139,7 @@ function App() {
           setModalFiltersVisible={setModalFiltersVisible}
           token={user.token}
           setModalLoginVisible={setModalLoginVisible}
-          setReloadHome={setReloadHome}
+          setReloadPage={setReloadPage}
         />
       )}
       {modalLoginVisible && (

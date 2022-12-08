@@ -1,7 +1,36 @@
 .around-me {
   margin-top: 30px;
-  width: 100%;
-  height: 100vh;
+  width: 70%;
+  height: 80vh;
+}
+
+.around-me .filters {
+  display: flex;
+  margin-bottom: 15px;
+}
+.around-me .raz-filters {
+  line-height: 20px;
+  padding: 0 10px;
+  color: white;
+  font-size: 14px;
+  margin-right: 20px;
+  background-color: rgb(0, 0, 0, 0.6);
+}
+.around-me .raz-filters:hover {
+  cursor: pointer;
+}
+.around-me .set-filters {
+  line-height: 20px;
+  padding: 0 10px;
+  color: white;
+  font-size: 14px;
+  background-color: rgb(0, 0, 0, 0.6);
+}
+.around-me .set-filters:hover {
+  cursor: pointer;
+}
+.around-me .set-filters span {
+  margin-right: 10px;
 }
 
 .around-me .map-container {
@@ -10,4 +39,10 @@
   border: 1px solid grey;
   width: 100%;
   height: 90%;
+}
+
+.page-around-me .waiting p {
+  font-size: 20px;
+  text-align: center;
+  margin-top: 20px;
 }

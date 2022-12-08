@@ -6,15 +6,14 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
+// functions
+import categoriesIconsLeaflet from "../functions/categoriesIconsLeaflet";
+
 const MapPageRestaurant = ({ restaurant }) => {
   // Icon Leaflet
   const homeIcon = new L.Icon({
     iconUrl: require("../img/here.svg").default,
     iconSize: new L.Point(40, 40),
-  });
-  const placeIcon = new L.Icon({
-    iconUrl: require("../img/placeholder.svg").default,
-    iconSize: new L.Point(30, 40),
   });
 
   // UseState
@@ -56,7 +55,7 @@ const MapPageRestaurant = ({ restaurant }) => {
       </Marker>
       <Marker
         position={[restaurant.location.lat, restaurant.location.lng]}
-        icon={placeIcon}
+        icon={categoriesIconsLeaflet(restaurant.category)}
       >
         <Popup>{restaurant.name}</Popup>
       </Marker>

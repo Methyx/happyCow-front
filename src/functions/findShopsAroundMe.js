@@ -1,4 +1,8 @@
 import axios from "axios";
+import Cookies from "js-cookie";
+
+// functions
+import { isFavorite } from "./handleFavorites";
 
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   var R = 6371; // Radius of the earth in km
@@ -19,14 +23,57 @@ function deg2rad(deg) {
   return deg * (Math.PI / 180);
 }
 
-const findShopsAroundMe = async (long, lat, distance, setData) => {
+// Start HERE
+
+const findShopsAroundMe = async (
+  long,
+  lat,
+  distance,
+  setData,
+  setIsSearchingAround
+) => {
+  setIsSearchingAround(true);
   let allData = [];
   const resultData = [];
+
   try {
-    const url =
-      "https://site--happycow-back--gw6mlgwnmzwz.code.run/restaurants?nbPerPage=9999";
+    let url = "https://site--happycow-back--gw6mlgwnmzwz.code.run/restaurants";
+    url += "?page=1";
+    url += "&nbPerPage=9999";
+    let filters = {};
+    const filtersTxt = await Cookies.get("happyCow-ContextFilters");
+
+    if (filtersTxt) {
+      filters = JSON.parse(filtersTxt);
+
+      if (filters.category) {
+        url += "&category=" + filters.category;
+      }
+      if (filters.type) {
+        url += "&type=" + filters.type;
+      }
+      if (filters.miniRating) {
+        url += "&rating=" + filters.miniRating;
+      }
+    }
     const response = await axios.get(url);
-    allData = response.data.restaurants;
+    // console.log(response.data);
+    if (filters?.favoritesOnly) {
+      const resultFavoritesTab = [];
+      for (let i = 0; i < response.data.restaurants.length; i++) {
+        if (isFavorite(response.data.restaurants[i]._id)) {
+          resultFavoritesTab.push(response.data.restaurants[i]);
+        }
+      }
+      allData = resultFavoritesTab;
+    } else {
+      allData = response.data.restaurants;
+    }
+
+    // const url =
+    //   "https://site--happycow-back--gw6mlgwnmzwz.code.run/restaurants?nbPerPage=9999";
+    // const response = await axios.get(url);
+    // allData = response.data.restaurants;
     for (let i = 0; i < allData.length; i++) {
       const distanceCalculated =
         getDistanceFromLatLonInKm(
@@ -40,9 +87,11 @@ const findShopsAroundMe = async (long, lat, distance, setData) => {
       }
     }
     setData(resultData);
+    setIsSearchingAround(false);
     return;
   } catch (error) {
     console.log(error.message);
+    setIsSearchingAround(false);
     return;
   }
 };
