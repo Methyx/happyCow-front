@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -39,10 +39,11 @@ const AroundMe = ({ setModalFiltersVisible, reloadPage, setReloadPage }) => {
   const [distance, setDistance] = useState(
     Cookies.get("happyCow-distance") || 500
   );
+
+  // functions
   const [debouncedDistance, setDebouncedDistance] = useState(
     Cookies.get("happyCow-distance") || 500
   );
-  // const [reloadPage, setReloadPage] = useState(false);
 
   const debounceDistance = useRef(
     debounce((nb) => {
@@ -51,9 +52,29 @@ const AroundMe = ({ setModalFiltersVisible, reloadPage, setReloadPage }) => {
     }, 1000)
   ).current;
 
+  const markerRef = useRef(null);
+  const eventHandlers = useMemo(
+    () => ({
+      dragend() {
+        const marker = markerRef.current;
+        if (marker != null) {
+          setPosition(marker.getLatLng());
+          Cookies.set("happyCow-Position", JSON.stringify(marker.getLatLng()));
+        }
+      },
+    }),
+    []
+  );
+
   // UseEffect
   useEffect(() => {
     const getPosition = async () => {
+      const cookiesPosition = await Cookies.get("happyCow-Position");
+      if (cookiesPosition) {
+        setPosition(JSON.parse(cookiesPosition));
+        setIsLocated(true);
+        return;
+      }
       if ("geolocation" in navigator) {
         const permission = await navigator.permissions.query({
           name: "geolocation",
@@ -85,7 +106,7 @@ const AroundMe = ({ setModalFiltersVisible, reloadPage, setReloadPage }) => {
       }
     };
     getPosition();
-  }, []);
+  }, [reloadPage]);
 
   useEffect(() => {
     if (isLocated) {
@@ -128,20 +149,31 @@ const AroundMe = ({ setModalFiltersVisible, reloadPage, setReloadPage }) => {
               </div>
             </div>
             <div className="distance">
-              <p>distance (meters) :</p>
-              <Box sx={{ width: "60%" }}>
-                <Slider
-                  value={distance}
-                  min={100}
-                  max={10000}
-                  step={100}
-                  valueLabelDisplay="on"
-                  onChange={(event) => {
-                    setDistance(event.target.value);
-                    debounceDistance(event.target.value);
-                  }}
-                />
-              </Box>
+              <div
+                className="raz-position"
+                onClick={() => {
+                  Cookies.remove("happyCow-Position");
+                  setReloadPage(true);
+                }}
+              >
+                RAZ Position
+              </div>
+              <div className="right">
+                <p>distance (meters) :</p>
+                <Box sx={{ width: "70%" }}>
+                  <Slider
+                    value={distance}
+                    min={100}
+                    max={10000}
+                    step={100}
+                    valueLabelDisplay="on"
+                    onChange={(event) => {
+                      setDistance(event.target.value);
+                      debounceDistance(event.target.value);
+                    }}
+                  />
+                </Box>
+              </div>
             </div>
           </div>
           <div className="map-inside">
@@ -155,15 +187,26 @@ const AroundMe = ({ setModalFiltersVisible, reloadPage, setReloadPage }) => {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               />
-              <Marker position={[position.lat, position.lng]} icon={homeIcon}>
-                <Popup>your position</Popup>
+              <Marker
+                position={position}
+                icon={homeIcon}
+                draggable={true}
+                eventHandlers={eventHandlers}
+                ref={markerRef}
+              >
+                <Popup>
+                  <p>
+                    Your Position
+                    <br /> Drag to force position
+                  </p>
+                </Popup>
               </Marker>
               {shopsAround.length &&
                 shopsAround.map((shop) => {
                   return (
                     <Marker
                       key={shop._id}
-                      position={[shop.location.lat, shop.location.lng]}
+                      position={shop.location}
                       icon={categoriesIconsLeaflet(shop.category)}
                     >
                       <Popup>
