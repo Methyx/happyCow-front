@@ -86,14 +86,12 @@ const AroundMe = ({ setModalFiltersVisible, reloadPage, setReloadPage }) => {
                 lng: success.coords.longitude,
                 lat: success.coords.latitude,
               });
-              setIsLocated(true);
             },
             (error) => {
               setPosition({
                 lng: 2.3522219,
                 lat: 48.856614,
               });
-              setIsLocated(true);
             }
           );
         } else {
@@ -101,9 +99,9 @@ const AroundMe = ({ setModalFiltersVisible, reloadPage, setReloadPage }) => {
             lng: 2.3522219,
             lat: 48.856614,
           });
-          setIsLocated(true);
         }
       }
+      setIsLocated(true);
     };
     getPosition();
   }, [reloadPage]);
@@ -183,7 +181,7 @@ const AroundMe = ({ setModalFiltersVisible, reloadPage, setReloadPage }) => {
             <MapContainer
               className="map-container"
               center={[position.lat, position.lng]}
-              zoom={12}
+              zoom={14}
               maxZoom={18}
             >
               <TileLayer

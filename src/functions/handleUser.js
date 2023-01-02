@@ -107,6 +107,7 @@ const handleUser = async (action, user, setUser) => {
     await Cookies.remove("happyCowUser");
     await Cookies.remove("happyCowFavorites");
     await Cookies.remove("happyCow-ContextFilters");
+    await Cookies.remove("happyCow-ContextHome");
     await Cookies.remove("happyCow-Position");
     await Cookies.remove("happyCow-distance");
     setUser({
